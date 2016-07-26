@@ -11,7 +11,7 @@ public class Host {
     public Vector<Occupation> occupationsLeft;
     public Vector<Item> itemsLeft;
     public Vector<Player> playersList;
-    public int[] teamBudget= {1, 1, 1, 1, 2, 2, 2, 2};
+    public int[] teamBudget= {1, 1, 1, 2, 2, 2, 2};
     public int wonTeam;
 
     public Host() {

@@ -27,39 +27,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addPlayersToHost() {
+        for (int i=0 ; i<7; i++ ) System.out.println("phan tu thu " + i + " la " + host.teamBudget[i]);
+        System.out.println("\n");
         shuffleArray(host.teamBudget);
 
-        host.playersList.add(0, humanPlayer);{}
-        host.playersList.add(1, botPlayer1);{
-            botPlayer1.setTeam(host.teamBudget[1]);
-        }
-        host.playersList.add(2, botPlayer2);{
-            botPlayer1.setTeam(host.teamBudget[2]);
-        }
-        host.playersList.add(3, botPlayer3);{
-            botPlayer1.setTeam(host.teamBudget[3]);
-        }
-        host.playersList.add(4, botPlayer4);{
-            botPlayer1.setTeam(host.teamBudget[4]);
-        }
-        host.playersList.add(5, botPlayer5);{
-            botPlayer1.setTeam(host.teamBudget[5]);
-        }
-        host.playersList.add(6, botPlayer6);{
-            botPlayer1.setTeam(host.teamBudget[6]);
-        }
-        host.playersList.add(7, botPlayer7);{
-            botPlayer1.setTeam(host.teamBudget[7]);
-        }
+        for (int i=0 ; i<7; i++ ) System.out.println("phan tu thu " + i + " la" + host.teamBudget[i]);
+        System.out.println("\n");
 
+        host.playersList.add(0, humanPlayer);
+        host.playersList.add(1, botPlayer1);    botPlayer1.setTeam(host.teamBudget[0]);
+        host.playersList.add(2, botPlayer2);    botPlayer2.setTeam(host.teamBudget[1]);
+        host.playersList.add(3, botPlayer3);    botPlayer3.setTeam(host.teamBudget[2]);
+        host.playersList.add(4, botPlayer4);    botPlayer4.setTeam(host.teamBudget[3]);
+        host.playersList.add(5, botPlayer5);    botPlayer5.setTeam(host.teamBudget[4]);
+        host.playersList.add(6, botPlayer6);    botPlayer6.setTeam(host.teamBudget[5]);
+        host.playersList.add(7, botPlayer7);    botPlayer7.setTeam(host.teamBudget[6]);
+
+        for (Player p: host.playersList){
+            System.out.println(p.getUsername() + " o team   "+ p.getTeam()) ;
+        }
 
     }
 
     private void shuffleArray(int[] ar) {
-        Random rnd = ThreadLocalRandom.current();
+        Random rnd = new Random();
         for (int i = ar.length - 1; i > 0; i--)
         {
-            int index = rnd.nextInt(i + 1);
+            int index = rnd.nextInt(i);
             // Simple swap
             int a = ar[index];
             ar[index] = ar[i];
@@ -79,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
         botPlayer5 =new Player("Day la Bot5", 1, "", 5, "Pass");
         botPlayer6 =new Player("Day la Bot6", 1, "", 6, "Pass");
         botPlayer7 =new Player("Day la Bot7", 1, "", 7, "Pass");
-
-
     }
 
     private void initHost() {
