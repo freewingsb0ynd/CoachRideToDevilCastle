@@ -65,7 +65,9 @@ public class Host {
         occupation8 = new Occupation(8); occupationsLeft.add(8,occupation8);
         occupation9 = new Occupation(9); occupationsLeft.add(9,occupation9);
 
-
+        for(Occupation o: occupationsLeft){
+            System.out.println("occupation thu " + occupationsLeft.indexOf(o)  + " la occu " +o.getOccupationType());
+        }
 
 
 
@@ -92,6 +94,9 @@ public class Host {
         item19 = new Item(15); itemsLeft.add(19,item19);
         item20 = new Item(16); itemsLeft.add(20,item20);
 
+        for(Item i: itemsLeft){
+            System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
+        }
 
     }
 

@@ -4,8 +4,24 @@ package com.example.hoangelato.coachridetodevilcastle;
  * Created by Hoangelato on 26/07/2016.
  */
 public class Item {
-    public int itemType;
-    public String itemEffect;
+    private int itemType;
+    private String itemEffect;
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getItemEffect() {
+        return itemEffect;
+    }
+
+    public void setItemEffect(String itemEffect) {
+        this.itemEffect = itemEffect;
+    }
 
     public Item(int itemType) {
         this.itemType = itemType;
