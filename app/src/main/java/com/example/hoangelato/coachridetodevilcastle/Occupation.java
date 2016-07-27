@@ -5,7 +5,8 @@ package com.example.hoangelato.coachridetodevilcastle;
  */
 public class Occupation {
     private int occupationType;
-    private Boolean isUsed;
+    private boolean isUsed;
+    private boolean isOccupied;
     private String occupationSkill;
 
     public int getOccupationType() {
@@ -20,8 +21,17 @@ public class Occupation {
         return isUsed;
     }
 
-    public void setUsed(Boolean used) {
+    public void setUsed(boolean used) {
         isUsed = used;
+    }
+
+
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        isOccupied = occupied;
     }
 
     public String getOccupationSkill() {
@@ -43,5 +53,6 @@ public class Occupation {
 
         }
         isUsed = false;
+        isOccupied=false;
     }
 }

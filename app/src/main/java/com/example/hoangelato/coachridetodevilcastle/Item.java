@@ -6,6 +6,15 @@ package com.example.hoangelato.coachridetodevilcastle;
 public class Item {
     private int itemType;
     private String itemEffect;
+    private boolean isOwned;
+
+    public boolean isOwned() {
+        return isOwned;
+    }
+
+    public void setOwned(boolean owned) {
+        isOwned = owned;
+    }
 
     public int getItemType() {
         return itemType;

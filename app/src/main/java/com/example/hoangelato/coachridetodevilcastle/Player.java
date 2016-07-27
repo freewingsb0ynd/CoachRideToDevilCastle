@@ -9,8 +9,8 @@ import java.util.Vector;
 public class Player implements PlayerActions {
     private String username;
     private int team;
-    private String occupation;
-    private Vector<Item> itemsList;
+    private Occupation occupation;
+    public Vector<Item> itemsList;
     private int order;
     private String vote;
 
@@ -34,11 +34,11 @@ public class Player implements PlayerActions {
         this.username = username;
     }
 
-    public String getOccupation() {
+    public Occupation getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(String occupation) {
+    public void setOccupation(Occupation occupation) {
         this.occupation = occupation;
     }
 
