@@ -9,5 +9,13 @@ public class Item {
 
     public Item(int itemType) {
         this.itemType = itemType;
+        switch (itemType){
+            case 0:
+                itemEffect= "Effect0";
+                break;
+            // 21 items
+            default: break;
+
+        }
     }
 }

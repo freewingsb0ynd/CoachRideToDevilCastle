@@ -65,13 +65,10 @@ public class Player implements PlayerActions {
 
     //Constructors
 
-    public Player(String username, int team, String occupation, int order, String vote) {
+    public Player(String username) {
         this.username = username;
-        this.team = team;
-        this.occupation = occupation;
         this.itemsList = new Vector<Item>();
-        this.order = order;
-        this.vote =  vote;
+        this.vote = "pass";
     }
 
     //methods
