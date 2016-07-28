@@ -79,18 +79,16 @@ public class Host {
         botPlayer6.setOccupation(occupationsLeft.get(6));  occupationsLeft.get(6).setOccupied(true);
         botPlayer7.setOccupation(occupationsLeft.get(7));  occupationsLeft.get(7).setOccupied(true);
 
-        // LOG: Fix lai, sd remove. nho duyet nguoc
-        {   //dao cac occu chua su dung len dau ds
-            int endOfList=9;
-            for (Occupation o : occupationsLeft) {
-                if (o.isOccupied()& !occupationsLeft.get(endOfList).isOccupied()) {
-                    Collections.swap(occupationsLeft,occupationsLeft.indexOf(o),endOfList);
-                    endOfList--;
-                }
+        // xoa cac occu da dc chia ra
+        {
+            int maxIndex=occupationsLeft.size()-1;
+            for (; maxIndex>-1; maxIndex--) {
+                Occupation o= occupationsLeft.get(maxIndex);
+                if (o.isOccupied()) occupationsLeft.remove(o);
             }
         }
         for(Occupation o: occupationsLeft){
-            if (!o.isOccupied())System.out.println("occupation thu " + occupationsLeft.indexOf(o)  + " la occu " +o.getOccupationType());
+            System.out.println("occupation thu " + occupationsLeft.indexOf(o)  + " la occu " +o.getOccupationType());
         }
 
         //initialize 21 items
@@ -120,45 +118,44 @@ public class Host {
             System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
         }
            //tron thu tu cac item ko phai tui
-        for (int i=20; i>1; i--){
+        for (int i=20; i>=2; i--){
             Random rnd = new Random();
-            int index = rnd.nextInt(i);
+            int index = rnd.nextInt(i)+2;
             Collections.swap(itemsLeft, index, i);
         }
 
-
+        for(Item i: itemsLeft){
+            System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
+        }
 
            //tron thu tu cac 8 item dau tien
-        for (int i=7; i>-1; i--){
+        for (int i=7; i>0; i--){
             Random rnd = new Random();
             int index = rnd.nextInt(i);
             Collections.swap(itemsLeft, index, i);
         }
 
         //phat cac item cho nguoi choi
-        humanPlayer.itemsList.add(itemsLeft.get(0));
-        botPlayer1.itemsList.add(itemsLeft.get(1));
-        botPlayer2.itemsList.add(itemsLeft.get(2));
-        botPlayer3.itemsList.add(itemsLeft.get(3));
-        botPlayer4.itemsList.add(itemsLeft.get(4));
-        botPlayer5.itemsList.add(itemsLeft.get(5));
-        botPlayer6.itemsList.add(itemsLeft.get(6));
-        botPlayer7.itemsList.add(itemsLeft.get(7));
+        humanPlayer.itemsList.add(itemsLeft.get(0));    itemsLeft.get(0).setOwned(true);
+        botPlayer1.itemsList.add(itemsLeft.get(1));     itemsLeft.get(1).setOwned(true);
+        botPlayer2.itemsList.add(itemsLeft.get(2));     itemsLeft.get(2).setOwned(true);
+        botPlayer3.itemsList.add(itemsLeft.get(3));     itemsLeft.get(3).setOwned(true);
+        botPlayer4.itemsList.add(itemsLeft.get(4));     itemsLeft.get(4).setOwned(true);
+        botPlayer5.itemsList.add(itemsLeft.get(5));     itemsLeft.get(5).setOwned(true);
+        botPlayer6.itemsList.add(itemsLeft.get(6));     itemsLeft.get(6).setOwned(true);
+        botPlayer7.itemsList.add(itemsLeft.get(7));     itemsLeft.get(7).setOwned(true);
 
-
-
-        {   //dao cac item chua su dung len dau ds
-            int endOfList= 20;
-            for (Item i : itemsLeft) {
-                if (i.isOwned()& !itemsLeft.get(endOfList).isOwned()) {
-                    Collections.swap(itemsLeft,itemsLeft.indexOf(i),endOfList);
-                    endOfList--;
-                }
+        //xoa cac item da dc so huu khoi ds
+        {
+            int maxIndex=itemsLeft.size()-1;
+            for (; maxIndex>-1; maxIndex--) {
+                Item i= itemsLeft.get(maxIndex);
+                if (i.isOwned())  itemsLeft.remove(i);
             }
         }
 
         for(Item i: itemsLeft){
-            if (!i.isOwned()) System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
+            System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
         }
 
     }
@@ -177,7 +174,8 @@ public class Host {
 
         for (Player p: playersList){
 
-            System.out.println(p.getUsername() + " o team   "+ p.getTeam() + "   o vi tri thu  " + p.getOrder() + " dang co occu  " +p.getOccupation().getOccupationType());
+            System.out.println(p.getUsername() + " o team   "+ p.getTeam() + "   o vi tri thu  " + p.getOrder()
+                    + " dang co occu  " +p.getOccupation().getOccupationType() + "  dang co item  " + p.itemsList.get(0).getItemType());
         }
 
 
