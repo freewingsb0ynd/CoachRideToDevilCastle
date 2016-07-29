@@ -5,12 +5,14 @@ package com.example.hoangelato.coachridetodevilcastle;
  */
 public interface PlayerActions {
 
-    void trade(String username);
+    void trade(Player p);
 
-    void war(String username);
+    void war(Player p);
 
     void pass();
 
     void declare(int team);
+
+    public void sendMess(Player p);
 
 }

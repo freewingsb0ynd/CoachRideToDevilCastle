@@ -1,6 +1,7 @@
 package com.example.hoangelato.coachridetodevilcastle;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -10,9 +11,9 @@ import java.util.Vector;
  * Created by Hoangelato on 26/07/2016.
  */
 public class Host {
-    public Vector<Occupation> occupationsLeft;
-    public Vector<Item> itemsLeft;
-    public Vector<Player> playersList;
+    public ArrayList<Occupation> occupationsLeft;
+    public ArrayList<Item> itemsLeft;
+    public ArrayList<Player> playersList;
     public static int gameTurn;
     public int[] teamBudget= {1, 1, 1, 1, 2, 2, 2, 2};
     public int[] orderList= {1, 2, 3, 4, 5, 6, 7, 8};
@@ -26,31 +27,57 @@ public class Host {
 
 
     public Host() {
-        occupationsLeft = new Vector<Occupation>();
-        itemsLeft = new Vector<Item>();
-        playersList = new Vector<Player>();
+        occupationsLeft = new ArrayList<Occupation>();
+        itemsLeft = new ArrayList<Item>();
+        playersList = new ArrayList<Player>();
         wonTeam = 0;
         gameTurn=0;
 
+        //init
         initPlayers();
-        initAndShuffleCards();
-        addPlayersToHost();
+        initGame();
 
     }
 
+    private void shuffleArray(int[] ar) {
+        Random rnd = new Random();
+        for (int i = ar.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i);
+            // Simple swap
+            int a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
+        }
+    }
 
-    private void initAndShuffleCards() {
-        for (int i=0 ; i<8; i++ ) System.out.println("teamBudget: phan tu thu " + i + " la " + teamBudget[i]);
-        System.out.println("\n");
-        shuffleArray(teamBudget);
-        for (int i=0 ; i<8; i++ ) System.out.println("teamBudget: phan tu thu " + i + " la" + teamBudget[i]);
-        System.out.println("\n");
+    private void initPlayers() {
+        //ban dau chi tao ra 1 doi tuong nguoi choi co the tương tac.
+        //7 con BOT
 
-        for (int i=0 ; i<8; i++ ) System.out.println("orderList: phan tu thu " + i + " la " + orderList[i]);
-        System.out.println("\n");
+        humanPlayer =new Player("Day la nguoi choi"); playersList.add(humanPlayer);
+        botPlayer1 =new Player("Day la Bot1      ");  playersList.add(botPlayer1);
+        botPlayer2 =new Player("Day la Bot2      ");  playersList.add(botPlayer2);
+        botPlayer3 =new Player("Day la Bot3      ");  playersList.add(botPlayer3);
+        botPlayer4 =new Player("Day la Bot4      ");  playersList.add(botPlayer4);
+        botPlayer5 =new Player("Day la Bot5      ");  playersList.add(botPlayer5);
+        botPlayer6 =new Player("Day la Bot6      ");  playersList.add(botPlayer6);
+        botPlayer7 =new Player("Day la Bot7      ");  playersList.add(botPlayer7);
+    }
+
+    private void initGame() {
+        //init order for players
         shuffleArray(orderList);
-        for (int i=0 ; i<8; i++ ) System.out.println("orderList: phan tu thu " + i + " la" + orderList[i]);
-        System.out.println("\n");
+        for (int i = 0; i < 8; i++){
+            for (Player p: playersList)
+                if (orderList[playersList.indexOf(p)]==i) Collections.swap(playersList,i,playersList.indexOf(p));
+        }
+
+        //separate 2 teams
+        shuffleArray(teamBudget);
+        for (int i =0; i <8; i++) {
+            playersList.get(i).setTeam(teamBudget[i]);
+        }
 
         //initialize 10 occupation
         occupation0 = new Occupation(0); occupationsLeft.add(occupation0);
@@ -64,20 +91,12 @@ public class Host {
         occupation8 = new Occupation(8); occupationsLeft.add(occupation8);
         occupation9 = new Occupation(9); occupationsLeft.add(occupation9);
 
-        for(Occupation o: occupationsLeft){
-            System.out.println("occupation thu " + occupationsLeft.indexOf(o)  + " la occu " +o.getOccupationType());
-        }
-
         Collections.shuffle(occupationsLeft);
 
-        humanPlayer.setOccupation(occupationsLeft.get(0)); occupationsLeft.get(0).setOccupied(true);
-        botPlayer1.setOccupation(occupationsLeft.get(1));  occupationsLeft.get(1).setOccupied(true);
-        botPlayer2.setOccupation(occupationsLeft.get(2));  occupationsLeft.get(2).setOccupied(true);
-        botPlayer3.setOccupation(occupationsLeft.get(3));  occupationsLeft.get(3).setOccupied(true);
-        botPlayer4.setOccupation(occupationsLeft.get(4));  occupationsLeft.get(4).setOccupied(true);
-        botPlayer5.setOccupation(occupationsLeft.get(5));  occupationsLeft.get(5).setOccupied(true);
-        botPlayer6.setOccupation(occupationsLeft.get(6));  occupationsLeft.get(6).setOccupied(true);
-        botPlayer7.setOccupation(occupationsLeft.get(7));  occupationsLeft.get(7).setOccupied(true);
+        for (int i=0; i<8; i++) {
+            playersList.get(i).setOccupation(occupationsLeft.get(i));
+            occupationsLeft.get(i).setOccupied(true);
+        }
 
         // xoa cac occu da dc chia ra
         {
@@ -86,9 +105,6 @@ public class Host {
                 Occupation o= occupationsLeft.get(maxIndex);
                 if (o.isOccupied()) occupationsLeft.remove(o);
             }
-        }
-        for(Occupation o: occupationsLeft){
-            System.out.println("occupation thu " + occupationsLeft.indexOf(o)  + " la occu " +o.getOccupationType());
         }
 
         //initialize 21 items
@@ -114,9 +130,6 @@ public class Host {
         item19 = new Item(15); itemsLeft.add(item19);
         item20 = new Item(16); itemsLeft.add(item20);
 
-        for(Item i: itemsLeft){
-            System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
-        }
            //tron thu tu cac item ko phai tui
         for (int i=20; i>=2; i--){
             Random rnd = new Random();
@@ -124,11 +137,7 @@ public class Host {
             Collections.swap(itemsLeft, index, i);
         }
 
-        for(Item i: itemsLeft){
-            System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
-        }
-
-           //tron thu tu cac 8 item dau tien
+            //tron thu tu cac 8 item dau tien
         for (int i=7; i>0; i--){
             Random rnd = new Random();
             int index = rnd.nextInt(i);
@@ -136,14 +145,10 @@ public class Host {
         }
 
         //phat cac item cho nguoi choi
-        humanPlayer.itemsList.add(itemsLeft.get(0));    itemsLeft.get(0).setOwned(true);
-        botPlayer1.itemsList.add(itemsLeft.get(1));     itemsLeft.get(1).setOwned(true);
-        botPlayer2.itemsList.add(itemsLeft.get(2));     itemsLeft.get(2).setOwned(true);
-        botPlayer3.itemsList.add(itemsLeft.get(3));     itemsLeft.get(3).setOwned(true);
-        botPlayer4.itemsList.add(itemsLeft.get(4));     itemsLeft.get(4).setOwned(true);
-        botPlayer5.itemsList.add(itemsLeft.get(5));     itemsLeft.get(5).setOwned(true);
-        botPlayer6.itemsList.add(itemsLeft.get(6));     itemsLeft.get(6).setOwned(true);
-        botPlayer7.itemsList.add(itemsLeft.get(7));     itemsLeft.get(7).setOwned(true);
+        for (int i=0; i<8; i++){
+            playersList.get(i).itemsList.add(itemsLeft.get(i));
+            itemsLeft.get(i).setOwned(true);
+        }
 
         //xoa cac item da dc so huu khoi ds
         {
@@ -154,58 +159,16 @@ public class Host {
             }
         }
 
-        for(Item i: itemsLeft){
-            System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
-        }
-
-    }
-
-
-    private void addPlayersToHost() {
-        playersList.add(humanPlayer);   humanPlayer.setTeam(teamBudget[0]);    humanPlayer.setOrder(orderList[0]);
-        playersList.add(botPlayer1);    botPlayer1.setTeam(teamBudget[1]);     botPlayer1.setOrder(orderList[1]);
-        playersList.add(botPlayer2);    botPlayer2.setTeam(teamBudget[2]);     botPlayer2.setOrder(orderList[2]);
-        playersList.add(botPlayer3);    botPlayer3.setTeam(teamBudget[3]);     botPlayer3.setOrder(orderList[3]);
-        playersList.add(botPlayer4);    botPlayer4.setTeam(teamBudget[4]);     botPlayer4.setOrder(orderList[4]);
-        playersList.add(botPlayer5);    botPlayer5.setTeam(teamBudget[5]);     botPlayer5.setOrder(orderList[5]);
-        playersList.add(botPlayer6);    botPlayer6.setTeam(teamBudget[6]);     botPlayer6.setOrder(orderList[6]);
-        playersList.add(botPlayer7);    botPlayer7.setTeam(teamBudget[7]);     botPlayer7.setOrder(orderList[7]);
-
-
-        for (Player p: playersList){
-
-            System.out.println(p.getUsername() + " o team   "+ p.getTeam() + "   o vi tri thu  " + p.getOrder()
+        for (int i=0; i<8;i++){
+            Player p=playersList.get(i);
+            System.out.println(p.getUsername() + " o team   "+ p.getTeam()
                     + " dang co occu  " +p.getOccupation().getOccupationType() + "  dang co item  " + p.itemsList.get(0).getItemType());
         }
-
-
-
     }
 
-    private void shuffleArray(int[] ar) {
-        Random rnd = new Random();
-        for (int i = ar.length - 1; i > 0; i--)
-        {
-            int index = rnd.nextInt(i);
-            // Simple swap
-            int a = ar[index];
-            ar[index] = ar[i];
-            ar[i] = a;
-        }
-    }
-
-    private void initPlayers() {
-        //ban dau chi tao ra 1 doi tuong nguoi choi co the tương tac.
-        //7 con BOT
-
-        humanPlayer =new Player("Day la nguoi choi");
-        botPlayer1 =new Player("Day la Bot1      ");
-        botPlayer2 =new Player("Day la Bot2      ");
-        botPlayer3 =new Player("Day la Bot3      ");
-        botPlayer4 =new Player("Day la Bot4      ");
-        botPlayer5 =new Player("Day la Bot5      ");
-        botPlayer6 =new Player("Day la Bot6      ");
-        botPlayer7 =new Player("Day la Bot7      ");
+    public void gamePlay(){
+        playersList.get(gameTurn%8).playTurn();
+        gameTurn++;
     }
 
 

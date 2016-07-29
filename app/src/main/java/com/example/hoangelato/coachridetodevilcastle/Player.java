@@ -10,9 +10,10 @@ public class Player implements PlayerActions {
     private String username;
     private int team;
     private Occupation occupation;
-    public Vector<Item> itemsList;
-    private int order;
+    public ArrayList<Item> itemsList;
     private String vote;
+    public ArrayList<Player> teammatesList;
+    public ArrayList<Player> opponentsList;
 
 
     //Getters and Setters
@@ -42,19 +43,6 @@ public class Player implements PlayerActions {
         this.occupation = occupation;
     }
 
-    public Vector<Item> getItemsList() {
-        return itemsList;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-
-        this.order = order;
-    }
-
     public String getVote() {
         return vote;
     }
@@ -67,19 +55,22 @@ public class Player implements PlayerActions {
 
     public Player(String username) {
         this.username = username;
-        this.itemsList = new Vector<Item>();
+        this.itemsList = new ArrayList<Item>();
+        this.opponentsList = new ArrayList<Player>();
+        this.teammatesList = new ArrayList<Player>();
         this.vote = "pass";
     }
 
     //methods
 
+
     @Override
-    public void trade(String username) {
+    public void trade(Player p) {
 
     }
 
     @Override
-    public void war(String username) {
+    public void war(Player p) {
 
     }
 
@@ -93,5 +84,14 @@ public class Player implements PlayerActions {
 
     }
 
+    public void playTurn(){
+
+    }
+
+    @Override
+    public void sendMess(Player p){
+        this.teammatesList.add(p);
+        p.teammatesList.add(this);
+    }
 
 }
