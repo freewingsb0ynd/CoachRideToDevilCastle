@@ -2,4 +2,9 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_start_newgame_button">200dp</dimen>
+    <dimen name="margin_top_newgame_button">150dp</dimen>
+    <dimen name="margin_top_text_new_game">170dp</dimen>
+    <dimen name="margin_start_text_new_game">300dp</dimen>
+    <dimen name="size_of_circle_button">50dp</dimen>
 </resources>

@@ -7,10 +7,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/fantasyart2"
     tools:context="com.example.hoangelato.coachridetodevilcastle.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <Button
+        android:layout_width="@dimen/size_of_circle_button"
+        android:layout_height="@dimen/size_of_circle_button"
+        android:background="@drawable/btnnewgame"
+        android:layout_marginStart="@dimen/margin_start_newgame_button"
+        android:layout_marginTop="@dimen/margin_top_newgame_button"
+        android:id="@+id/btnNewGame"/>
+
 </RelativeLayout>
