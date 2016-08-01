@@ -15,7 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GamePlayActivity"></activity>
+        <activity android:name=".GamePlayActivity" />
+        <activity android:name=".HostWaitingActivity" />
+        <activity android:name=".Server.ServerActivity" />
+        <activity android:name=".Client.ClientActivity"></activity>
     </application>
 
 </manifest>

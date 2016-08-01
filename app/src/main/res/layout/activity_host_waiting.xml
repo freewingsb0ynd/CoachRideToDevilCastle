@@ -7,22 +7,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/fantasyart2"
-    tools:context="com.example.hoangelato.coachridetodevilcastle.MainActivity">
-
-    <Button
+    tools:context="com.example.hoangelato.coachridetodevilcastle.HostWaitingActivity"
+    android:background="@drawable/waitingScreen"
+    >
+    <ListView
         android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Create new game"
+        android:layout_height="400dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_top_newgame_button"
-        android:id="@+id/btnCreate"/>
-
+        android:id="@+id/list_Player"
+        >
+    </ListView>
     <Button
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="Join game"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/btnCreate"
-        android:id="@+id/btnJoin"/>
+        android:layout_toRightOf="@id/list_Player"
+        android:layout_centerVertical="true"
+        android:text="Start game"
+        />
 </RelativeLayout>

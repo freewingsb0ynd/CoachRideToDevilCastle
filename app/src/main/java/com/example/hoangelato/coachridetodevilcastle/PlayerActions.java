@@ -13,6 +13,7 @@ public interface PlayerActions {
 
     void declare(int team);
 
-    public void sendMess(Player p);
+    void sendMess(Player p);
+
 
 }

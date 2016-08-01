@@ -6,15 +6,16 @@ import java.util.Vector;
 /**
  * Created by Hoangelato on 26/07/2016.
  */
-public class Player implements PlayerActions {
+public class Player implements PlayerActions{
     private String username;
     private int team;
     private Occupation occupation;
     public ArrayList<Item> itemsList;
-    private String vote;
     public ArrayList<Player> teammatesList;
     public ArrayList<Player> opponentsList;
-
+    public ArrayList<Item> teammateItems;
+    public ArrayList<Item> opponentItems;
+    protected Host host;
 
     //Getters and Setters
 
@@ -43,22 +44,16 @@ public class Player implements PlayerActions {
         this.occupation = occupation;
     }
 
-    public String getVote() {
-        return vote;
-    }
-
-    public void setVote(String vote) {
-        this.vote = vote;
-    }
-
     //Constructors
 
-    public Player(String username) {
+    public Player(String username, Host host) {
         this.username = username;
         this.itemsList = new ArrayList<Item>();
         this.opponentsList = new ArrayList<Player>();
         this.teammatesList = new ArrayList<Player>();
-        this.vote = "pass";
+        this.teammateItems = new ArrayList<Item>();
+        this.opponentItems = new ArrayList<Item>();
+        this.host = host;
     }
 
     //methods
@@ -71,6 +66,7 @@ public class Player implements PlayerActions {
 
     @Override
     public void war(Player p) {
+        WarEvent war = new WarEvent(this, p);
 
     }
 
@@ -93,5 +89,7 @@ public class Player implements PlayerActions {
         this.teammatesList.add(p);
         p.teammatesList.add(this);
     }
+
+
 
 }
