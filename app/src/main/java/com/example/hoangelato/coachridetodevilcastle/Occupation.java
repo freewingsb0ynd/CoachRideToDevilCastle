@@ -7,7 +7,7 @@ public class Occupation {
     private int occupationType;
     private boolean isUsed;
     private boolean isOccupied;
-    private String occupationSkill;
+    private String occupationSrc;
 
     public int getOccupationType() {
         return occupationType;
@@ -34,23 +34,48 @@ public class Occupation {
         isOccupied = occupied;
     }
 
-    public String getOccupationSkill() {
-        return occupationSkill;
+    public String getOccupationSrc() {
+        return occupationSrc;
     }
 
-    public void setOccupationSkill(String occupationSkill) {
-        this.occupationSkill = occupationSkill;
+    public void setOccupationSrc(String occupationSrc) {
+        this.occupationSrc = occupationSrc;
     }
 
     public Occupation(int occupationType) {
         this.occupationType = occupationType;
         switch (occupationType){
             case 0:
-                occupationSkill= "Skill0";
+                occupationSrc= "@drawable/occupation_bodyguard";
                 break;
-            // 10 occupation
-            default: break;
-
+            case 1:
+                occupationSrc= "@drawable/occupation_clairvoyant";
+                break;
+            case 2:
+                occupationSrc= "@drawable/occupation_diplomat";
+                break;
+            case 3:
+                occupationSrc= "@drawable/occupation_doctor";
+                break;
+            case 4:
+                occupationSrc= "@drawable/occupation_duelist";
+                break;
+            case 5:
+                occupationSrc= "@drawable/occupation_grandmaster";
+                break;
+            case 6:
+                occupationSrc= "@drawable/occupation_hypnotist";
+                break;
+            case 7:
+                occupationSrc= "@drawable/occupation_poisonmixer";
+                break;
+            case 8:
+                occupationSrc= "@drawable/occupation_priest";
+                break;
+            case 9:
+                occupationSrc= "@drawable/occupation_thug";
+                break;
+            default:break;
         }
         isUsed = false;
         isOccupied=false;

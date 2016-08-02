@@ -9,4 +9,6 @@
     <color name="colorDeepPurple4">#5E35B1</color>
     <color name="colorDeepPurple5">#512DA8</color>
     <color name="colorPurple">#9C27B0</color>
+    <color name="colorDialog">#78909C</color>
+
 </resources>

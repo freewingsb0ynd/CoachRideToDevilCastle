@@ -147,7 +147,7 @@ public class Host {
         //phat cac item cho nguoi choi
         for (int i=0; i<8; i++){
             playersList.get(i).itemsList.add(itemsLeft.get(i));
-            itemsLeft.get(i).setOwned(true);
+            itemsLeft.get(i).isOwned=true;
         }
 
         //xoa cac item da dc so huu khoi ds
@@ -155,7 +155,7 @@ public class Host {
             int maxIndex=itemsLeft.size()-1;
             for (; maxIndex>-1; maxIndex--) {
                 Item i= itemsLeft.get(maxIndex);
-                if (i.isOwned())  itemsLeft.remove(i);
+                if (i.isOwned)  itemsLeft.remove(i);
             }
         }
 

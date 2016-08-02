@@ -18,19 +18,21 @@
         android:layout_marginEnd="@dimen/margin_horizontal_between_players"
         android:id="@+id/player5_slot"
         >
-        <FrameLayout
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:id="@+id/player5_team_slot"
+            android:src="@drawable/team_backside"
             >
-        </FrameLayout>
-        <FrameLayout
+        </ImageView>
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@id/player5_team_slot"
             android:id="@+id/player5_occu_slot"
+            android:src="@drawable/occupation_backside"
             >
-        </FrameLayout>
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -39,19 +41,21 @@
         android:layout_toLeftOf="@id/player5_slot"
         android:id="@+id/player4_slot"
         >
-        <FrameLayout
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:id="@+id/player4_team_slot"
+            android:src="@drawable/team_backside"
             >
-        </FrameLayout>
-        <FrameLayout
+        </ImageView>
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@id/player4_team_slot"
             android:id="@+id/player4_occu_slot"
+            android:src="@drawable/occupation_backside"
             >
-        </FrameLayout>
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -60,33 +64,22 @@
         android:layout_toRightOf="@id/player5_slot"
         android:id="@+id/player6_slot"
         >
-        <FrameLayout
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:id="@+id/player6_team_slot"
+            android:src="@drawable/team_backside"
             >
-        </FrameLayout>
-        <FrameLayout
+        </ImageView>
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@id/player6_team_slot"
             android:id="@+id/player6_occu_slot"
+            android:src="@drawable/occupation_backside"
             >
-        </FrameLayout>
+        </ImageView>
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="280dp"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="20dp"
-        android:layout_centerInParent="true"
-        android:id="@+id/items_slot"
-        >
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="100dp"
         android:layout_height="80dp"
@@ -96,19 +89,20 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/player1_slot"
         >
-        <FrameLayout
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:id="@+id/player1_team_slot"
             >
-        </FrameLayout>
-        <FrameLayout
+        </ImageView>
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@id/player1_team_slot"
             android:id="@+id/player1_occu_slot"
+
             >
-        </FrameLayout>
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -118,19 +112,21 @@
         android:id="@+id/player2_slot"
         android:layout_alignParentBottom="true"
         >
-        <FrameLayout
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:id="@+id/player2_team_slot"
+            android:src="@drawable/team_backside"
             >
-        </FrameLayout>
-        <FrameLayout
+        </ImageView>
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@id/player2_team_slot"
             android:id="@+id/player2_occu_slot"
+            android:src="@drawable/occupation_backside"
             >
-        </FrameLayout>
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -140,19 +136,22 @@
         android:id="@+id/player8_slot"
         android:layout_alignParentBottom="true"
         >
-        <FrameLayout
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:id="@+id/player8_team_slot"
+            android:src="@drawable/team_backside"
+
             >
-        </FrameLayout>
-        <FrameLayout
+        </ImageView>
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@id/player8_team_slot"
             android:id="@+id/player8_occu_slot"
+            android:src="@drawable/occupation_backside"
             >
-        </FrameLayout>
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -162,19 +161,21 @@
         android:id="@+id/player3_slot"
 
         >
-        <FrameLayout
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:id="@+id/player3_team_slot"
+            android:src="@drawable/team_backside"
             >
-        </FrameLayout>
-        <FrameLayout
+        </ImageView>
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@id/player3_team_slot"
             android:id="@+id/player3_occu_slot"
+            android:src="@drawable/occupation_backside"
             >
-        </FrameLayout>
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -184,19 +185,21 @@
         android:id="@+id/player7_slot"
         android:layout_alignParentRight="true"
         >
-        <FrameLayout
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:id="@+id/player7_team_slot"
+            android:src="@drawable/team_backside"
             >
-        </FrameLayout>
-        <FrameLayout
+        </ImageView>
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@id/player7_team_slot"
             android:id="@+id/player7_occu_slot"
+            android:src="@drawable/occupation_backside"
             >
-        </FrameLayout>
+        </ImageView>
     </RelativeLayout>
     <Button
         android:layout_width="wrap_content"
@@ -223,4 +226,131 @@
         android:id="@+id/btn_sp.atk"
         />
 
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:id="@+id/items_slot"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/item1_slot"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/item2_slot"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/item3_slot"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/item4_slot"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/item5_slot"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:background="@color/colorDialog"
+        android:id="@+id/checked_items_dialog"
+        android:visibility="invisible"
+        >
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/checked_items_container"
+            >
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/checked_item1_slot"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/checked_item2_slot"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/checked_item3_slot"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/checked_item4_slot"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/checked_item5_slot"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/checked_item_done"
+            android:text="Ok"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:textSize="12sp"
+            android:text="Choose one item that you want to take"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="240dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:background="@color/colorDialog"
+        android:id="@+id/checked_team_and_occu_dialog"
+        android:visibility="invisible"
+        >
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="160dp"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/checked_team_and_occu_container"
+            >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/checked_team_slot"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/checked_occu_slot"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/checked_team_and_occu_done"
+            android:text="Ok"
+            >
+        </Button>
+    </RelativeLayout>
 </RelativeLayout>
