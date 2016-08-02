@@ -11,10 +11,10 @@ public class Player implements PlayerActions{
     private int team;
     private Occupation occupation;
     public ArrayList<Item> itemsList;
-    public ArrayList<Player> teammatesList;
-    public ArrayList<Player> opponentsList;
-    public ArrayList<Item> teammateItems;
-    public ArrayList<Item> opponentItems;
+//    public ArrayList<Player> teammatesList;
+//    public ArrayList<Player> opponentsList;
+//    public ArrayList<Item> teammateItems;
+//    public ArrayList<Item> opponentItems;
     protected Host host;
 
     //Getters and Setters
@@ -49,10 +49,10 @@ public class Player implements PlayerActions{
     public Player(String username, Host host) {
         this.username = username;
         this.itemsList = new ArrayList<Item>();
-        this.opponentsList = new ArrayList<Player>();
-        this.teammatesList = new ArrayList<Player>();
-        this.teammateItems = new ArrayList<Item>();
-        this.opponentItems = new ArrayList<Item>();
+//        this.opponentsList = new ArrayList<Player>();
+//        this.teammatesList = new ArrayList<Player>();
+//        this.teammateItems = new ArrayList<Item>();
+//        this.opponentItems = new ArrayList<Item>();
         this.host = host;
     }
 
@@ -82,13 +82,14 @@ public class Player implements PlayerActions{
 
     public void playTurn(){
 
+
     }
 
-    @Override
-    public void sendMess(Player p){
-        this.teammatesList.add(p);
-        p.teammatesList.add(this);
-    }
+//    @Override
+//    public void sendMess(Player p){
+//        this.teammatesList.add(p);
+//        p.teammatesList.add(this);
+//    }
 
 
 

@@ -7,4 +7,5 @@
     <dimen name="margin_top_text_new_game">170dp</dimen>
     <dimen name="margin_start_text_new_game">300dp</dimen>
     <dimen name="size_of_circle_button">50dp</dimen>
+    <dimen name="margin_horizontal_between_players">30dp</dimen>
 </resources>
