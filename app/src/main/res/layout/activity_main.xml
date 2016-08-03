@@ -16,13 +16,13 @@
         android:text="Create new game"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_top_newgame_button"
-        android:id="@+id/btnCreate"/>
+        android:id="@+id/btn_create"/>
 
     <Button
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Join game"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/btnCreate"
-        android:id="@+id/btnJoin"/>
+        android:layout_below="@id/btn_create"
+        android:id="@+id/btn_join"/>
 </RelativeLayout>

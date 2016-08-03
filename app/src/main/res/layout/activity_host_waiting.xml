@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.hoangelato.coachridetodevilcastle.HostWaitingActivity"
-    android:background="@drawable/waitingScreen"
+    android:background="@drawable/waiting_screen"
     >
     <ListView
         android:layout_width="200dp"
@@ -23,5 +23,9 @@
         android:layout_toRightOf="@id/list_Player"
         android:layout_centerVertical="true"
         android:text="Start game"
-        />
+        android:id="@+id/btn_start_game" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cur_ip"/>
 </RelativeLayout>

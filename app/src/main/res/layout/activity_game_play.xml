@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/gamePlay"
+    android:background="@drawable/game_play"
     tools:context="com.example.hoangelato.coachridetodevilcastle.GamePlayActivity">
     
     <RelativeLayout
@@ -178,29 +178,6 @@
         </ImageView>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_above="@id/btn_sp.atk"
-        android:id="@+id/player7_slot"
-        android:layout_alignParentRight="true"
-        >
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:id="@+id/player7_team_slot"
-            android:src="@drawable/team_backside"
-            >
-        </ImageView>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:layout_toRightOf="@id/player7_team_slot"
-            android:id="@+id/player7_occu_slot"
-            android:src="@drawable/occupation_backside"
-            >
-        </ImageView>
-    </RelativeLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -225,6 +202,30 @@
         android:text="sp. atk"
         android:id="@+id/btn_sp.atk"
         />
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_above="@id/btn_sp.atk"
+        android:id="@+id/player7_slot"
+        android:layout_alignParentRight="true"
+        >
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:id="@+id/player7_team_slot"
+            android:src="@drawable/team_backside"
+            >
+        </ImageView>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:layout_toRightOf="@id/player7_team_slot"
+            android:id="@+id/player7_occu_slot"
+            android:src="@drawable/occupation_backside"
+            >
+        </ImageView>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="250dp"
