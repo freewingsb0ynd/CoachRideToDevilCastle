@@ -31,7 +31,7 @@ public class ClientActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                Client mClient = new Client(
+                final Client mClient = new Client(
                         editTextAddress.getText().toString()
                         , Integer.parseInt(editTextPort.getText().toString())
                 );
@@ -50,12 +50,11 @@ public class ClientActivity extends AppCompatActivity {
                                 response.setText("Connected to server");
                             }
                         });
+                        Bundle bundle = new Bundle();
+                        bundle.putString("user ip", EndPoint.getCurrentIp());
+                        mClient.dataSender.send(0, bundle);
                     }
                 });
-
-                Bundle bundle = new Bundle();
-                bundle.putString("user ip", EndPoint.getCurrentIp());
-                mClient.dataSender.send(0, bundle);
             }
         });
 

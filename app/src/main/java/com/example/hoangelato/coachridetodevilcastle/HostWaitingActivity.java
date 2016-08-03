@@ -20,6 +20,7 @@ public class HostWaitingActivity extends AppCompatActivity implements View.OnCli
     ListView listConnectedPlayers;
     Button btnStart;
     Server mServer;
+    TextView curIp;
     final MyAdapter myAdapter = new MyAdapter();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class HostWaitingActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initView() {
-        TextView curIp = (TextView) findViewById(R.id.cur_ip);
+        curIp = (TextView) findViewById(R.id.cur_ip);
         curIp.setText(EndPoint.getCurrentIp());
         listConnectedPlayers= (ListView) findViewById(R.id.list_Player);
         listConnectedPlayers.setAdapter(myAdapter);
@@ -49,8 +50,13 @@ public class HostWaitingActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-            public void onNewConnection(int count) {
-
+            public void onNewConnection(final int count) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        curIp.setText(String.valueOf(count));
+                    }
+                });
             }
         });
     }

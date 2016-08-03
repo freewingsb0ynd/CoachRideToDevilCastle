@@ -30,7 +30,7 @@ public class Client extends EndPoint {
         public void run() {
             try {
                 connectedConnections.add(new Connection(new Socket(serverAddress, serverPort)));
-                dataSolver.onNewConnection(0);
+                onNewConnection(0);
             } catch (IOException e) {
                 e.printStackTrace();
             }

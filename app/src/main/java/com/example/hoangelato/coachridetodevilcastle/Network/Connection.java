@@ -13,8 +13,6 @@ import java.net.Socket;
  */
 public class Connection {
     private Socket mSocket;
-    public BufferedReader mReader;
-    public PrintWriter mWriter;
     public DataInputStream mObjectReader;
     public DataOutputStream mObjectWriter;
 
@@ -22,8 +20,6 @@ public class Connection {
         mSocket = socket;
 
         try {
-            mReader = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
-            mWriter = new PrintWriter(mSocket.getOutputStream(), true);
             mObjectReader = new DataInputStream(mSocket.getInputStream());
             mObjectWriter = new DataOutputStream(mSocket.getOutputStream());
         } catch (IOException e) {
@@ -33,8 +29,8 @@ public class Connection {
 
     public void close() {
         try {
-            mReader.close();
-            mWriter.close();
+            mObjectReader.close();
+            mObjectWriter.close();
             mSocket.close();
         } catch (IOException e) {
             e.printStackTrace();

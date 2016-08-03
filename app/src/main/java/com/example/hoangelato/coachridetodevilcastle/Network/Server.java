@@ -28,7 +28,7 @@ public class Server extends EndPoint {
                 while (true) {
                     Socket clientSocket = serverSocket.accept();
                     connectedConnections.add(new Connection(clientSocket));
-                    dataSolver.onNewConnection(connectedConnections.size()-1);
+                    onNewConnection(connectedConnections.size()-1);
                 }
 
             } catch (IOException e) {

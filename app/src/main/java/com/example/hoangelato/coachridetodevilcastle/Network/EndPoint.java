@@ -18,8 +18,8 @@ public class EndPoint {
     Vector<Connection> connectedConnections = new Vector<>();
     Thread dataListener;
     public DataSender dataSender;
-    Context mContext;
-    DataSolver dataSolver;
+    Vector<DataSolver> dataSolvers = new Vector<>();
+
 
 
     public interface DataSolver {
@@ -28,11 +28,7 @@ public class EndPoint {
     }
 
     public void addDataSolver(DataSolver dataSolver) {
-        this.dataSolver = dataSolver;
-    }
-
-    public void setContext(Context context) {
-        mContext = context;
+        dataSolvers.add(dataSolver);
     }
 
     public EndPoint() {
@@ -40,6 +36,20 @@ public class EndPoint {
         dataListener.start();
 
         dataSender = new DataSender();
+    }
+
+    void onDataReceived(byte[] bytesReceived) {
+        Enumeration<DataSolver> solvers = dataSolvers.elements();
+        while(solvers.hasMoreElements()) {
+            solvers.nextElement().onDataReceived(bytesReceived);
+        }
+    }
+
+    void onNewConnection(int count) {
+        Enumeration<DataSolver> solvers = dataSolvers.elements();
+        while(solvers.hasMoreElements()) {
+            solvers.nextElement().onNewConnection(count);
+        }
     }
 
     class ListenForDataThread extends Thread {
@@ -55,7 +65,7 @@ public class EndPoint {
                             byte[] bytesReceived = new byte[dataLength];
                             curConnection.mObjectReader.readFully(bytesReceived);
 
-                            dataSolver.onDataReceived(bytesReceived);
+                            onDataReceived(bytesReceived);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
