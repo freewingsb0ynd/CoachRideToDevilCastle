@@ -58,6 +58,11 @@ public class HostWaitingActivity extends AppCompatActivity implements View.OnCli
                     }
                 });
             }
+
+            @Override
+            public void onConnectFail(String reason) {
+
+            }
         });
     }
 

@@ -25,6 +25,7 @@ public class EndPoint {
     public interface DataSolver {
         void onDataReceived(final byte[] bytesReceived);
         void onNewConnection(final int count);
+        void onConnectFail(String reason);
     }
 
     public void addDataSolver(DataSolver dataSolver) {
@@ -49,6 +50,13 @@ public class EndPoint {
         Enumeration<DataSolver> solvers = dataSolvers.elements();
         while(solvers.hasMoreElements()) {
             solvers.nextElement().onNewConnection(count);
+        }
+    }
+
+    void onConnectFail(String reason) {
+        Enumeration<DataSolver> solvers = dataSolvers.elements();
+        while(solvers.hasMoreElements()) {
+            solvers.nextElement().onConnectFail(reason);
         }
     }
 

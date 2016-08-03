@@ -15,12 +15,15 @@ public class ClientActivity extends AppCompatActivity {
     TextView response;
     EditText editTextAddress, editTextPort;
     Button buttonConnect, buttonClear;
-
+    Client mClient = new Client();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
+        initView();
+    }
 
+    private void initView() {
         editTextAddress = (EditText) findViewById(R.id.addressEditText);
         editTextPort = (EditText) findViewById(R.id.portEditText);
         buttonConnect = (Button) findViewById(R.id.connectButton);
@@ -31,10 +34,12 @@ public class ClientActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                final Client mClient = new Client(
+                mClient.connectToHost(
                         editTextAddress.getText().toString()
                         , Integer.parseInt(editTextPort.getText().toString())
                 );
+
+                response.setText("Connecting");
 
                 mClient.addDataSolver(new EndPoint.DataSolver() {
                     @Override
@@ -53,6 +58,16 @@ public class ClientActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("user ip", EndPoint.getCurrentIp());
                         mClient.dataSender.send(0, bundle);
+                    }
+
+                    @Override
+                    public void onConnectFail(final String reason) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                response.setText("Cant connect because " + reason);
+                            }
+                        });
                     }
                 });
             }

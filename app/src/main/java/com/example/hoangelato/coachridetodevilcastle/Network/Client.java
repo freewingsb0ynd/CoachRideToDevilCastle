@@ -10,8 +10,12 @@ public class Client extends EndPoint {
 
     Thread clientThread;
 
-    public Client(String serverAddress, int serverPort) {
+    public Client() {
         super();
+    }
+
+    public Client(String serverAddress, int serverPort) {
+        this();
 
         clientThread = new Thread(new ConnectToServer(serverAddress, serverPort));
         clientThread.start();
@@ -33,8 +37,19 @@ public class Client extends EndPoint {
                 onNewConnection(0);
             } catch (IOException e) {
                 e.printStackTrace();
+                onConnectFail(e.toString());
             }
         }
+    }
+
+    public void connectToHost(String serverAddress, int serverPort) {
+        if (clientThread != null) {
+            clientThread.interrupt();
+        }
+        connectedConnections.clear();
+
+        clientThread = new Thread(new ConnectToServer(serverAddress, serverPort));
+        clientThread.start();
     }
 
     @Override
