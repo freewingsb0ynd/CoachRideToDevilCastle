@@ -1,5 +1,7 @@
 package com.example.hoangelato.coachridetodevilcastle;
 
+import com.example.hoangelato.coachridetodevilcastle.Network.Client;
+
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -11,6 +13,7 @@ public class Player implements PlayerActions{
     private int team;
     private Occupation occupation;
     public ArrayList<Item> itemsList;
+    private Client mClient;
 //    public ArrayList<Player> teammatesList;
 //    public ArrayList<Player> opponentsList;
 //    public ArrayList<Item> teammateItems;
