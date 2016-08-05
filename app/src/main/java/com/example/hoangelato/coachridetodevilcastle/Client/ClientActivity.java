@@ -2,20 +2,30 @@ package com.example.hoangelato.coachridetodevilcastle.Client;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hoangelato.coachridetodevilcastle.Network.Client;
 import com.example.hoangelato.coachridetodevilcastle.Network.EndPoint;
 import com.example.hoangelato.coachridetodevilcastle.R;
 
+import java.util.ArrayList;
+import java.util.Vector;
+
 public class ClientActivity extends AppCompatActivity {
-    TextView response;
-    EditText editTextAddress, editTextPort;
-    Button buttonConnect, buttonClear;
-    Client mClient = new Client();
+
+    Client mClient;
+    Button connectBtn;
+    Button findBtn;
+    ListView availServer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,60 +34,58 @@ public class ClientActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        editTextAddress = (EditText) findViewById(R.id.addressEditText);
-        editTextPort = (EditText) findViewById(R.id.portEditText);
-        buttonConnect = (Button) findViewById(R.id.connectButton);
-        buttonClear = (Button) findViewById(R.id.clearButton);
-        response = (TextView) findViewById(R.id.responseTextView);
+        connectBtn = (Button) findViewById(R.id.btn_connect_server);
+        findBtn = (Button) findViewById(R.id.btn_find_servers);
+        availServer = (ListView) findViewById(R.id.server_list);
+        mClient = new Client(this);
 
-        buttonConnect.setOnClickListener(new View.OnClickListener() {
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this, R.layout.avail_server, R.id.server, new Vector<String>()
+        );
 
+        availServer.setAdapter(arrayAdapter);
+
+
+        findBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
-                mClient.connectToHost(
-                        editTextAddress.getText().toString()
-                        , Integer.parseInt(editTextPort.getText().toString())
-                );
+            public void onClick(View view) {
+                arrayAdapter.clear();
+                Log.d("client", "start finding ip");
 
-                response.setText("Connecting");
-
-                mClient.addDataSolver(new EndPoint.DataSolver() {
+                new Thread(new Runnable() {
                     @Override
-                    public void onDataReceived(byte[] data) {
-
-                    }
-
-                    @Override
-                    public void onNewConnection(int count) {
-                        runOnUiThread(new Runnable() {
+                    public void run() {
+                        mClient.findServersIp(new EndPoint.ProgressListener() {
                             @Override
-                            public void run() {
-                                response.setText("Connected to server");
+                            public void onUpdateProgress(final double percentage) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Log.d("client", "percent " + String.valueOf(percentage));
+                                    }
+                                });
                             }
-                        });
-                        Bundle bundle = new Bundle();
-                        bundle.putString("user ip", EndPoint.getCurrentIp());
-                        mClient.dataSender.send(0, bundle);
-                    }
 
-                    @Override
-                    public void onConnectFail(final String reason) {
-                        runOnUiThread(new Runnable() {
                             @Override
-                            public void run() {
-                                response.setText("Cant connect because " + reason);
+                            public void onDone(final Object result) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        arrayAdapter.addAll(((Vector<String>) result));
+                                    }
+                                });
+                                Log.d("client", "done scan for ip");
                             }
                         });
                     }
-                });
+                }).start();
             }
         });
 
-        buttonClear.setOnClickListener(new View.OnClickListener() {
-
+        availServer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                response.setText("");
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
             }
         });
     }

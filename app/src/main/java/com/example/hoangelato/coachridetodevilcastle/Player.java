@@ -7,6 +7,7 @@ import java.util.Vector;
  * Created by Hoangelato on 26/07/2016.
  */
 public class Player implements PlayerActions{
+    public static final String USERNAME_TAG = "player";
     private String username;
     private int team;
     private Occupation occupation;
@@ -46,14 +47,21 @@ public class Player implements PlayerActions{
 
     //Constructors
 
-    public Player(String username, Host host) {
+    public Player() {}
+
+    public Player(String userame, Host host) {
+        this(userame);
+
+        this.host = host;
+    }
+
+    public Player(String username) {
         this.username = username;
         this.itemsList = new ArrayList<Item>();
 //        this.opponentsList = new ArrayList<Player>();
 //        this.teammatesList = new ArrayList<Player>();
 //        this.teammateItems = new ArrayList<Item>();
 //        this.opponentItems = new ArrayList<Item>();
-        this.host = host;
     }
 
     //methods

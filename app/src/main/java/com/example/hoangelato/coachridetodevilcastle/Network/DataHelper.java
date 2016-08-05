@@ -1,5 +1,6 @@
 package com.example.hoangelato.coachridetodevilcastle.Network;
 
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,6 +28,10 @@ public class DataHelper {
         T result = creator.createFromParcel(parcel);
         parcel.recycle();
         return result;
+    }
+
+    public static Bundle toBundle(byte[] bytes) {
+        return toObject(bytes, Bundle.CREATOR);
     }
 
 }

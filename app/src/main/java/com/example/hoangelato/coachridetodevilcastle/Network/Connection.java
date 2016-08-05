@@ -12,7 +12,7 @@ import java.net.Socket;
  * Created by NguyenDuc on 8/2/2016.
  */
 public class Connection {
-    private Socket mSocket;
+    public Socket mSocket;
     public DataInputStream mObjectReader;
     public DataOutputStream mObjectWriter;
 

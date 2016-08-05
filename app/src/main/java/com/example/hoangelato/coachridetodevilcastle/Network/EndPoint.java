@@ -17,15 +17,20 @@ import java.util.Vector;
 public class EndPoint {
     Vector<Connection> connectedConnections = new Vector<>();
     Thread dataListener;
-    public DataSender dataSender;
     Vector<DataSolver> dataSolvers = new Vector<>();
 
 
-
     public interface DataSolver {
-        void onDataReceived(final byte[] bytesReceived);
-        void onNewConnection(final int count);
+        void onDataReceived(final byte[] bytesReceived, Connection fromConnection);
+
+        void onNewConnection(final int count, Connection newConnection);
+
         void onConnectFail(String reason);
+    }
+
+    public interface ProgressListener{
+        void onUpdateProgress(double percentage);
+        void onDone(Object result);
     }
 
     public void addDataSolver(DataSolver dataSolver) {
@@ -35,27 +40,25 @@ public class EndPoint {
     public EndPoint() {
         dataListener = new Thread(new ListenForDataThread());
         dataListener.start();
-
-        dataSender = new DataSender();
     }
 
-    void onDataReceived(byte[] bytesReceived) {
+    void onDataReceived(byte[] bytesReceived, Connection fromConnection) {
         Enumeration<DataSolver> solvers = dataSolvers.elements();
-        while(solvers.hasMoreElements()) {
-            solvers.nextElement().onDataReceived(bytesReceived);
+        while (solvers.hasMoreElements()) {
+            solvers.nextElement().onDataReceived(bytesReceived, fromConnection);
         }
     }
 
     void onNewConnection(int count) {
         Enumeration<DataSolver> solvers = dataSolvers.elements();
-        while(solvers.hasMoreElements()) {
-            solvers.nextElement().onNewConnection(count);
+        while (solvers.hasMoreElements()) {
+            solvers.nextElement().onNewConnection(count, connectedConnections.get(count));
         }
     }
 
     void onConnectFail(String reason) {
         Enumeration<DataSolver> solvers = dataSolvers.elements();
-        while(solvers.hasMoreElements()) {
+        while (solvers.hasMoreElements()) {
             solvers.nextElement().onConnectFail(reason);
         }
     }
@@ -73,7 +76,7 @@ public class EndPoint {
                             byte[] bytesReceived = new byte[dataLength];
                             curConnection.mObjectReader.readFully(bytesReceived);
 
-                            onDataReceived(bytesReceived);
+                            onDataReceived(bytesReceived, curConnection);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -84,22 +87,20 @@ public class EndPoint {
         }
     }
 
-    public class DataSender {
-        public void send(int connectionPos, Parcelable data) {
-            send(connectedConnections.get(connectionPos), data);
-        }
 
-
-        public void send(Connection connection, Parcelable data) {
-            byte[] bytes = DataHelper.toByte(data);
-            try {
-                connection.mObjectWriter.writeInt(bytes.length);
-                connection.mObjectWriter.write(bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public void send(int connectionPos, Parcelable data) {
+        send(connectedConnections.get(connectionPos), data);
+    }
+    public void send(Connection connection, Parcelable data) {
+        byte[] bytes = DataHelper.toByte(data);
+        try {
+            connection.mObjectWriter.writeInt(bytes.length);
+            connection.mObjectWriter.write(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 
     public static String getCurrentIp() {
         String ip = "";

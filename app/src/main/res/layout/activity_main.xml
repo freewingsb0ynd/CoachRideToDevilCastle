@@ -14,8 +14,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Create new game"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_top_newgame_button"
+        android:layout_centerInParent="true"
         android:id="@+id/btn_create"/>
 
     <Button
@@ -25,4 +24,11 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/btn_create"
         android:id="@+id/btn_join"/>
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:hint="username"
+        android:layout_above="@id/btn_create"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/username"/>
 </RelativeLayout>

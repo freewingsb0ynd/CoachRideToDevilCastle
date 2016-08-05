@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.hoangelato.coachridetodevilcastle.Client.ClientActivity;
 
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button createGameBtn;
     Button joinGameBtn;
+    EditText username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +36,30 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         createGameBtn = (Button) findViewById(R.id.btn_create);
         joinGameBtn = (Button) findViewById(R.id.btn_join);
+        username = (EditText) findViewById(R.id.username);
+
 
         createGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, HostWaitingActivity.class);
-                startActivity(intent);
+                if(username.getText().toString().equals("")) {
+                } else {
+                    Intent intent = new Intent(MainActivity.this, HostWaitingActivity.class);
+                    intent.putExtra(Player.USERNAME_TAG, username.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
 
         joinGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ClientActivity.class);
-                startActivity(intent);
+                if(username.getText().toString().equals("")) {
+                } else {
+                    Intent intent = new Intent(MainActivity.this, ClientActivity.class);
+                    intent.putExtra(Player.USERNAME_TAG, username.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
     }

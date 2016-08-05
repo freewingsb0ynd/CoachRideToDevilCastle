@@ -10,33 +10,25 @@
     android:orientation="vertical"
     tools:context=".Client.ClientActivity">
 
-    <EditText
-        android:id="@+id/addressEditText"
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Server ip address" />
-
-    <EditText
-        android:id="@+id/portEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Server port number" />
+        android:id="@+id/server_list">
+    </ListView>
 
     <Button
-        android:id="@+id/connectButton"
+        android:id="@+id/btn_connect_server"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Connect..." />
+        android:text="Connect..."/>
 
     <Button
-        android:id="@+id/clearButton"
+        android:id="@+id/btn_find_servers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Clear" />
+        android:text="Find Server" />
+    
 
-    <TextView
-        android:id="@+id/responseTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
 </LinearLayout>

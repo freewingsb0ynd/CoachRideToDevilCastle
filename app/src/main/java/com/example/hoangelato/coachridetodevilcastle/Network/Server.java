@@ -8,7 +8,7 @@ import java.net.Socket;
  * Created by NguyenDuc on 8/2/2016.
  */
 public class Server extends EndPoint {
-    public static final int SERVERPORT = 8080;
+    public static final int SERVERPORT = 6969;
     ServerSocket serverSocket;
     Thread serverThread;
 
