@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.Socket;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -18,7 +19,16 @@ public class EndPoint {
     Vector<Connection> connectedConnections = new Vector<>();
     Thread dataListener;
     Vector<DataSolver> dataSolvers = new Vector<>();
+    Vector<String> connectedIp = new Vector<>();
 
+    public void addConnection(Socket socket) {
+        connectedConnections.add(new Connection(socket));
+        connectedIp.add(socket.getInetAddress().getHostAddress());
+    }
+
+    public boolean isConnected(Socket socket) {
+        return connectedIp.contains(socket.getInetAddress().getHostAddress());
+    }
 
     public interface DataSolver {
         void onDataReceived(final byte[] bytesReceived, Connection fromConnection);
