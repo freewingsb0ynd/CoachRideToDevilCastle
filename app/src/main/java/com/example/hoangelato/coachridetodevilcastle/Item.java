@@ -5,7 +5,7 @@ package com.example.hoangelato.coachridetodevilcastle;
  */
 public class Item {
     private int itemType;
-    private String itemSrc;
+    private int itemSrc;
     public boolean isOwned;
 
 
@@ -17,11 +17,11 @@ public class Item {
         this.itemType = itemType;
     }
 
-    public String getItemSrc() {
+    public int getItemSrc() {
         return itemSrc;
     }
 
-    public void setItemSrc(String itemSrc) {
+    public void setItemSrc(int itemSrc) {
         this.itemSrc = itemSrc;
     }
 
@@ -29,57 +29,59 @@ public class Item {
         this.itemType = itemType;
         switch (itemType){
             case 0:
-                itemSrc= "@drawable/item_key";
+                itemSrc= R.drawable.item_key;
                 break;
             case 1:
-                itemSrc= "@drawable/item_goblet";
+                itemSrc= R.drawable.item_goblet;
                 break;
             case 2:
-                itemSrc= "@drawable/item_secretbaggobblet";
+                itemSrc= R.drawable.item_secretbagkey;
                 break;
             case 3:
-                itemSrc= "@drawable/item_secretbagkey";
+                itemSrc= R.drawable.item_secretbaggoblet;
                 break;
             case 4:
-                itemSrc= "@drawable/item_blackpearl";
+                itemSrc= R.drawable.item_blackpearl;
                 break;
             case 5:
-                itemSrc= "@drawable/item_brokenmirror";
+                itemSrc= R.drawable.item_brokenmirror;
                 break;
             case 6:
-                itemSrc= "@drawable/item_castingknives";
+                itemSrc= R.drawable.item_castingknives;
                 break;
             case 7:
-                itemSrc= "@drawable/item_coat";
+                itemSrc= R.drawable.item_coat;
                 break;
             case 8:
-                itemSrc= "@drawable/item_dagger";
+                itemSrc= R.drawable.item_dagger;
                 break;
             case 9:
-                itemSrc= "@drawable/item_gloves";
+                itemSrc= R.drawable.item_gloves;
                 break;
             case 10:
-                itemSrc= "@drawable/item_monocle";
+                itemSrc= R.drawable.item_monocle;
                 break;
             case 11:
-                itemSrc= "@drawable/item_poisonring";
+                itemSrc= R.drawable.item_poisonring;
                 break;
             case 12:
-                itemSrc= "@drawable/item_privilege";
+                itemSrc= R.drawable.item_privilege;
                 break;
             case 13:
-                itemSrc= "@drawable/item_sextant";
+                itemSrc= R.drawable.item_sextant;
                 break;
             case 14:
-                itemSrc= "@drawable/item_thecoatofarmoroftheloge";
+                itemSrc= R.drawable.item_thecoatofarmoroftheloge;
                 break;
             case 15:
-                itemSrc= "@drawable/item_tome";
+                itemSrc= R.drawable.item_tome;
                 break;
             case 16:
-                itemSrc= "@drawable/item_whip";
+                itemSrc= R.drawable.item_whip;
                 break;
-            default: break;
+            default:
+                itemSrc = -1;
+                break;
         }
     }
 }

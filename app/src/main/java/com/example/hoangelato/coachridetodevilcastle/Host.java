@@ -95,7 +95,7 @@ public class Host {
 
         for (int i=0; i<8; i++) {
             playersList.get(i).setOccupation(occupationsLeft.get(i));
-            occupationsLeft.get(i).setOccupied(true);
+            occupationsLeft.get(i).isOccupied=true;
         }
 
         // xoa cac occu da dc chia ra
@@ -103,7 +103,7 @@ public class Host {
             int maxIndex=occupationsLeft.size()-1;
             for (; maxIndex>-1; maxIndex--) {
                 Occupation o= occupationsLeft.get(maxIndex);
-                if (o.isOccupied()) occupationsLeft.remove(o);
+                if (o.isOccupied) occupationsLeft.remove(o);
             }
         }
 
@@ -157,6 +157,15 @@ public class Host {
                 Item i= itemsLeft.get(maxIndex);
                 if (i.isOwned)  itemsLeft.remove(i);
             }
+        }
+
+        //sout de kiem tra
+        for(Occupation o: occupationsLeft){
+            System.out.println("occupation thu " + occupationsLeft.indexOf(o)  + " la occu " +o.getOccupationType());
+        }
+
+        for(Item i: itemsLeft){
+            System.out.println("item thu " + itemsLeft.indexOf(i)  + " la item " +i.getItemType());
         }
 
         for (int i=0; i<8;i++){

@@ -8,4 +8,9 @@
     <dimen name="margin_start_text_new_game">300dp</dimen>
     <dimen name="size_of_circle_button">50dp</dimen>
     <dimen name="margin_horizontal_between_players">30dp</dimen>
+    <dimen name="textOnBacksideSize">30sp</dimen>
+    <dimen name="widthCardSmallSize">50dp</dimen>
+    <dimen name="heightCardSmallSize">80dp</dimen>
+    <dimen name="width2CardSmallSize">100dp</dimen>
+    <dimen name="fontTextOnBackside">30sp</dimen>
 </resources>

@@ -6,8 +6,8 @@ package com.example.hoangelato.coachridetodevilcastle;
 public class Occupation {
     private int occupationType;
     private boolean isUsed;
-    private boolean isOccupied;
-    private String occupationSrc;
+    public boolean isOccupied;
+    private int occupationSrc;
 
     public int getOccupationType() {
         return occupationType;
@@ -25,20 +25,11 @@ public class Occupation {
         isUsed = used;
     }
 
-
-    public boolean isOccupied() {
-        return isOccupied;
-    }
-
-    public void setOccupied(boolean occupied) {
-        isOccupied = occupied;
-    }
-
-    public String getOccupationSrc() {
+    public int getOccupationSrc() {
         return occupationSrc;
     }
 
-    public void setOccupationSrc(String occupationSrc) {
+    public void setOccupationSrc(int occupationSrc) {
         this.occupationSrc = occupationSrc;
     }
 
@@ -46,36 +37,37 @@ public class Occupation {
         this.occupationType = occupationType;
         switch (occupationType){
             case 0:
-                occupationSrc= "@drawable/occupation_bodyguard";
+                occupationSrc= R.drawable.occupation_bodyguard;
                 break;
             case 1:
-                occupationSrc= "@drawable/occupation_clairvoyant";
+                occupationSrc= R.drawable.occupation_clairvoyant;
                 break;
             case 2:
-                occupationSrc= "@drawable/occupation_diplomat";
+                occupationSrc= R.drawable.occupation_diplomat;
                 break;
             case 3:
-                occupationSrc= "@drawable/occupation_doctor";
+                occupationSrc= R.drawable.occupation_doctor;
                 break;
             case 4:
-                occupationSrc= "@drawable/occupation_duelist";
+                occupationSrc= R.drawable.occupation_duelist;
                 break;
             case 5:
-                occupationSrc= "@drawable/occupation_grandmaster";
+                occupationSrc= R.drawable.occupation_grandmaster;
                 break;
             case 6:
-                occupationSrc= "@drawable/occupation_hypnotist";
+                occupationSrc= R.drawable.occupation_hypnotist;
                 break;
             case 7:
-                occupationSrc= "@drawable/occupation_poisonmixer";
+                occupationSrc= R.drawable.occupation_poisonmixer;
                 break;
             case 8:
-                occupationSrc= "@drawable/occupation_priest";
+                occupationSrc= R.drawable.occupation_priest;
                 break;
             case 9:
-                occupationSrc= "@drawable/occupation_thug";
+                occupationSrc= R.drawable.occupation_thug;
                 break;
-            default:break;
+            default:occupationSrc =-1;
+                break;
         }
         isUsed = false;
         isOccupied=false;

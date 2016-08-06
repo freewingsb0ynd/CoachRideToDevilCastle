@@ -11,78 +11,109 @@
     tools:context="com.example.hoangelato.coachridetodevilcastle.GamePlayActivity">
     
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/margin_horizontal_between_players"
         android:layout_marginEnd="@dimen/margin_horizontal_between_players"
         android:id="@+id/player5_slot"
         >
+
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:id="@+id/player5_team_slot"
-            android:src="@drawable/team_backside"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:id="@+id/player5_item_slot"
+            android:src="@drawable/item_backside"
             >
         </ImageView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:layout_toRightOf="@id/player5_team_slot"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:layout_toRightOf="@id/player5_item_slot"
             android:id="@+id/player5_occu_slot"
             android:src="@drawable/occupation_backside"
             >
         </ImageView>
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnItemBackside"
+            android:text="0"
+            android:textSize="@dimen/fontTextOnBackside"
+            android:id="@+id/player5_number_items"
+            />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:layout_toLeftOf="@id/player5_slot"
         android:id="@+id/player4_slot"
         >
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:id="@+id/player4_team_slot"
-            android:src="@drawable/team_backside"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:id="@+id/player4_item_slot"
+            android:src="@drawable/item_backside"
             >
         </ImageView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:layout_toRightOf="@id/player4_team_slot"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:layout_toRightOf="@id/player4_item_slot"
             android:id="@+id/player4_occu_slot"
             android:src="@drawable/occupation_backside"
             >
         </ImageView>
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnItemBackside"
+            android:text="0"
+            android:textSize="@dimen/fontTextOnBackside"
+            android:id="@+id/player4_number_items"
+            />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:layout_toRightOf="@id/player5_slot"
         android:id="@+id/player6_slot"
         >
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:id="@+id/player6_team_slot"
-            android:src="@drawable/team_backside"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:id="@+id/player6_item_slot"
+            android:src="@drawable/item_backside"
             >
         </ImageView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:layout_toRightOf="@id/player6_team_slot"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:layout_toRightOf="@id/player6_item_slot"
             android:id="@+id/player6_occu_slot"
             android:src="@drawable/occupation_backside"
             >
         </ImageView>
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnItemBackside"
+            android:text="0"
+            android:textSize="@dimen/fontTextOnBackside"
+            android:id="@+id/player6_number_items"
+            />
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/margin_horizontal_between_players"
         android:layout_marginEnd="@dimen/margin_horizontal_between_players"
@@ -90,92 +121,122 @@
         android:id="@+id/player1_slot"
         >
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
             android:id="@+id/player1_team_slot"
             >
         </ImageView>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
+        <ImageButton
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
             android:layout_toRightOf="@id/player1_team_slot"
             android:id="@+id/player1_occu_slot"
 
             >
-        </ImageView>
+        </ImageButton>
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:layout_toLeftOf="@id/player1_slot"
         android:id="@+id/player2_slot"
         android:layout_alignParentBottom="true"
         >
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:id="@+id/player2_team_slot"
-            android:src="@drawable/team_backside"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:id="@+id/player2_item_slot"
+            android:src="@drawable/item_backside"
             >
         </ImageView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:layout_toRightOf="@id/player2_team_slot"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:layout_toRightOf="@id/player2_item_slot"
             android:id="@+id/player2_occu_slot"
             android:src="@drawable/occupation_backside"
             >
         </ImageView>
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnItemBackside"
+            android:text="0"
+            android:textSize="@dimen/fontTextOnBackside"
+            android:id="@+id/player2_number_items"
+            />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:layout_toRightOf="@id/player1_slot"
         android:id="@+id/player8_slot"
         android:layout_alignParentBottom="true"
         >
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:id="@+id/player8_team_slot"
-            android:src="@drawable/team_backside"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:id="@+id/player8_item_slot"
+            android:src="@drawable/item_backside"
 
             >
         </ImageView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:layout_toRightOf="@id/player8_team_slot"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:layout_toRightOf="@id/player8_item_slot"
             android:id="@+id/player8_occu_slot"
             android:src="@drawable/occupation_backside"
             >
         </ImageView>
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnItemBackside"
+            android:text="0"
+            android:textSize="@dimen/fontTextOnBackside"
+            android:id="@+id/player8_number_items"
+            />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:layout_centerVertical="true"
         android:id="@+id/player3_slot"
 
         >
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:id="@+id/player3_team_slot"
-            android:src="@drawable/team_backside"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:id="@+id/player3_item_slot"
+            android:src="@drawable/item_backside"
             >
         </ImageView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:layout_toRightOf="@id/player3_team_slot"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:layout_toRightOf="@id/player3_item_slot"
             android:id="@+id/player3_occu_slot"
             android:src="@drawable/occupation_backside"
             >
         </ImageView>
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnItemBackside"
+            android:text="0"
+            android:textSize="@dimen/fontTextOnBackside"
+            android:id="@+id/player3_number_items"
+            />
     </RelativeLayout>
 
     <Button
@@ -185,6 +246,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:id="@+id/btn_abstain"
+        android:alpha="0.7"
         />
     <Button
         android:layout_width="wrap_content"
@@ -192,6 +254,7 @@
         android:layout_above="@id/btn_abstain"
         android:layout_alignParentRight="true"
         android:text="sp. def"
+        android:alpha="0.7"
         android:id="@+id/btn_sp.def"
         />
     <Button
@@ -199,40 +262,98 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/btn_sp.def"
         android:layout_alignParentRight="true"
+        android:alpha="0.7"
         android:text="sp. atk"
         android:id="@+id/btn_sp.atk"
         />
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:layout_above="@id/btn_sp.atk"
         android:id="@+id/player7_slot"
         android:layout_alignParentRight="true"
         >
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:id="@+id/player7_team_slot"
-            android:src="@drawable/team_backside"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:id="@+id/player7_item_slot"
+            android:src="@drawable/item_backside"
             >
         </ImageView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:layout_toRightOf="@id/player7_team_slot"
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:layout_toRightOf="@id/player7_item_slot"
             android:id="@+id/player7_occu_slot"
             android:src="@drawable/occupation_backside"
             >
         </ImageView>
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnItemBackside"
+            android:text="0"
+            android:textSize="@dimen/fontTextOnBackside"
+            android:id="@+id/player7_number_items"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/width2CardSmallSize"
+        android:layout_height="@dimen/heightCardSmallSize"
+        android:layout_centerInParent="true"
+        android:id="@+id/host_slot"
+        >
+        <ImageView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:id="@+id/host_item_slot"
+            android:src="@drawable/item_backside"
+            >
+        </ImageView>
+        <ImageView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="@dimen/heightCardSmallSize"
+            android:layout_toRightOf="@id/host_item_slot"
+            android:id="@+id/host_occu_slot"
+            android:src="@drawable/occupation_backside"
+            >
+        </ImageView>
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnItemBackside"
+            android:text="0"
+            android:textSize="@dimen/textOnBacksideSize"
+
+            android:id="@+id/host_number_items"
+            />
+        <TextView
+            android:layout_width="@dimen/widthCardSmallSize"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextOnOccuBackside"
+            android:text="0"
+            android:textSize="@dimen/fontTextOnBackside"
+            android:layout_toRightOf="@id/host_number_items"
+            android:gravity="center"
+            android:id="@+id/host_number_occu"
+            />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="250dp"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/heightCardSmallSize"
         android:orientation="horizontal"
-        android:layout_centerInParent="true"
+        android:layout_above="@id/player1_slot"
+        android:layout_centerHorizontal="true"
         android:id="@+id/items_slot"
+        android:background="@color/colorDialog"
         >
         <ImageView
             android:layout_width="0dp"
@@ -260,6 +381,7 @@
             android:layout_height="match_parent"
             android:id="@+id/item5_slot"/>
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="120dp"
@@ -270,7 +392,7 @@
         >
         <LinearLayout
             android:layout_width="250dp"
-            android:layout_height="80dp"
+            android:layout_height="@dimen/heightCardSmallSize"
             android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:id="@+id/checked_items_container"

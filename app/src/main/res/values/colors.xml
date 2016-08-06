@@ -10,5 +10,6 @@
     <color name="colorDeepPurple5">#512DA8</color>
     <color name="colorPurple">#9C27B0</color>
     <color name="colorDialog">#78909C</color>
-
+    <color name="colorTextOnItemBackside">#D50000</color>
+    <color name="colorTextOnOccuBackside">#1A237E</color>
 </resources>
