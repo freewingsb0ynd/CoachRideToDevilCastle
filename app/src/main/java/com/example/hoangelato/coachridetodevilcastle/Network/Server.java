@@ -27,8 +27,10 @@ public class Server extends EndPoint {
 
                 while (true) {
                     Socket clientSocket = serverSocket.accept();
-                    connectedConnections.add(new Connection(clientSocket));
-                    onNewConnection(connectedConnections.size()-1);
+                    if (!isConnected(clientSocket)) {
+                        connectedConnections.add(new Connection(clientSocket));
+                        onNewConnection(connectedConnections.size()-1);
+                    }
                 }
 
             } catch (IOException e) {
