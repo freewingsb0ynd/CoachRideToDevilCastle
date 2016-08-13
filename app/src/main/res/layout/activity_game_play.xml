@@ -441,27 +441,29 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="@dimen/width_choose_trader_dialog"
-        android:layout_height="@dimen/height_choose_trader_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@color/colorDialog"
-        android:id="@+id/choose_trader_dialog"
+        android:id="@+id/info_dialog"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:visibility="invisible"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose player you want to trade with"
             android:textSize="@dimen/textsize_tv_choose_trader_dialog"
             android:layout_centerHorizontal="true"
-            android:paddingTop="@dimen/paddingtop_tv_choose_trader_dialog"
-            android:id="@+id/tv_choose_trader_dialog"/>
+            android:id="@+id/tv_info_dialog"/>
         <Button
             android:layout_width="@dimen/width_btn_choose_trader_dialog"
             android:layout_height="@dimen/height_btn_choose_trader_dialog"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/tv_choose_trader_dialog"
-            android:id="@+id/btn_choose_trader_dialog"
+            android:layout_below="@id/tv_info_dialog"
+            android:id="@+id/btn_ok_info_dialog"
             android:text="ok"/>
     </RelativeLayout>
 

@@ -18,9 +18,9 @@ public class Host {
     public int[] teamBudget= {1, 1, 1, 1, 2, 2, 2, 2};
     public int[] orderList= {1, 2, 3, 4, 5, 6, 7, 8};
     public int wonTeam;
-    public static Occupation occupation0, occupation1, occupation2, occupation3, occupation4,
+    Occupation occupation0, occupation1, occupation2, occupation3, occupation4,
             occupation5, occupation6, occupation7, occupation8, occupation9;
-    public static Item item0, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10,
+    Item item0, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10,
             item11, item12, item13, item14, item15, item16, item17, item18, item19, item20;
 
     Player humanPlayer, botPlayer1, botPlayer2, botPlayer3, botPlayer4, botPlayer5, botPlayer6, botPlayer7;
