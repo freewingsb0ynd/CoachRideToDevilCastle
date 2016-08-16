@@ -201,7 +201,7 @@ public class GamePlayActivity extends AppCompatActivity {
 
     private void gameplay() {
  //       while (host.wonTeam==0) {  //khi chua ben nao thang
-            //den turn, server goi client
+            //den turn, mServer goi client
             myturn = true;
             //hien dialog chon action
             if (!listActionDialogVisible){

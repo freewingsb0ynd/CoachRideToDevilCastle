@@ -5,8 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by NguyenDuc on 8/3/2016.
+ * Created by NguyenDuc on 8/5/2016.
  */
+
 public class DataHelper {
     public static byte[] toByte(Parcelable parcelable) {
         Parcel parcel = Parcel.obtain();
@@ -19,7 +20,7 @@ public class DataHelper {
     public static Parcel toParcel(byte[] bytes) {
         Parcel parcel = Parcel.obtain();
         parcel.unmarshall(bytes, 0, bytes.length);
-        parcel.setDataPosition(0); // this is extremely important!
+        parcel.setDataPosition(0);
         return parcel;
     }
 
