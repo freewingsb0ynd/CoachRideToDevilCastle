@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.concurrent.TransferQueue;
 
 public class GamePlayActivity extends AppCompatActivity {
     public static Host host;
@@ -167,8 +168,9 @@ public class GamePlayActivity extends AppCompatActivity {
         btnDeclare = (Button) findViewById(R.id.btn_declare);
         btnEnd =(Button) findViewById(R.id.btn_end);
 
-        chooseTraderDialog = (RelativeLayout) findViewById(R.id.choose_trader_dialog);
-        btnChooseTrader = (Button) findViewById(R.id.btn_choose_trader_dialog);
+        infoDialog = (RelativeLayout) findViewById(R.id.info_dialog);
+        tvInfoDialog = (TextView) findViewById(R.id.tv_info_dialog);
+        btnOkInfoDialog = (Button) findViewById(R.id.btn_ok_info_dialog);
 
         chooseOneIn7OthersPlayers.add(imgPlayer2Occu);
         chooseOneIn7OthersPlayers.add(imgPlayer3Occu);
@@ -191,10 +193,11 @@ public class GamePlayActivity extends AppCompatActivity {
     boolean listActionDialogVisible=false;
     RelativeLayout listActionDialog;
     Button btnTrade, btnWar, btnDeclare, btnEnd;
-    RelativeLayout chooseTraderDialog;
-    Button btnChooseTrader;
+    RelativeLayout infoDialog;
+    TextView tvInfoDialog;
+    Button btnOkInfoDialog;
     boolean traderChosen = false;
-    Bundle tradePutToHost;
+    Bundle tradePutToHost,tradeReceivedFromHost;
     int bundleChosedPlayer, bundleChosedItem;
     ArrayList<ImageView> chooseOneIn7OthersPlayers = new ArrayList<>();
     ArrayList<ImageButton> chooseOneOfYourItems = new ArrayList<>();
@@ -214,15 +217,15 @@ public class GamePlayActivity extends AppCompatActivity {
                 btnTrade.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         listActionDialog.setVisibility(View.INVISIBLE);
                         listActionDialogVisible=false;
-                        chooseTraderDialog.setVisibility(View.VISIBLE);
+                        tvInfoDialog.setText("Choose player you want to trade with");
+                        infoDialog.setVisibility(View.VISIBLE);
    //                     System.out.println("chay vao day roi dm");
-                        btnChooseTrader.setOnClickListener(new View.OnClickListener() {
+                        btnOkInfoDialog.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                chooseTraderDialog.setVisibility(View.INVISIBLE);
+                                infoDialog.setVisibility(View.INVISIBLE);
                                 traderChosen = true;
   //                              System.out.println("fksdsjkbksd");
                             }
@@ -236,7 +239,8 @@ public class GamePlayActivity extends AppCompatActivity {
                                     if (traderChosen){
                                         System.out.println("chon vao p " + finalI);
                                         bundleChosedPlayer = finalI;
-                                        tradePutToHost.putInt("ChosedPlayer", bundleChosedPlayer);
+                                        tradePutToHost.putSerializable("ChosedPlayer",
+                                                host.playersList.get((host.playersList.indexOf(p)+bundleChosedPlayer)%8));
                                     }
                                     itemsSlot.setVisibility(View.VISIBLE);
                                     itemsOnHandDialogVisible = true;
@@ -248,7 +252,7 @@ public class GamePlayActivity extends AppCompatActivity {
                                                 bundleChosedItem = finalJ;
                                                 itemsSlot.setVisibility(View.INVISIBLE);
                                                 itemsOnHandDialogVisible = false;
-                                                tradePutToHost.putInt("ChosedItems", bundleChosedItem);
+                                                tradePutToHost.putSerializable("ChosedItems", p.itemsList.get(bundleChosedItem));
                                             }
                                         });
                                     }
@@ -256,8 +260,35 @@ public class GamePlayActivity extends AppCompatActivity {
 
                                     //day bundle di, cho kq
 
-                                    //kq tra ve, xu ly, end turn
 
+                                    //kq tra ve
+                                    //if( /*request/ received code true*/ )
+                                    {
+                                    //fake
+                                        tradeReceivedFromHost.putSerializable("ItemReceived", host.item0);
+                                        tradeReceivedFromHost.putSerializable("PlayerTraded", host.botPlayer1);
+                                        //
+
+                                        Item itemReceived = (Item) tradeReceivedFromHost.getSerializable("ItemReceived");
+                                        Player playerTraded = (Player) tradeReceivedFromHost.getSerializable("PlayerTraded");
+
+
+
+                                        //xu ly 9*9 = 81 th
+
+                                        //switch ()
+
+
+//                                        int itemIndex = tradePutToHost.getInt("ChosedItems");
+//                                        int playerReceiverIndex = (tradePutToHost.getInt("ChosedItems") + host.playersList.indexOf(p))%8;
+//                                        Item itemTrade = new Item(itemIndex);
+//                                        Item itemReceived = new Item(i1);
+//                                        effectOfItemTrade(host, itemTrade, host.playersList.indexOf(p), playerReceiverIndex );
+//                                        effectOfItemTrade(host, itemReceived, playerReceiverIndex, host.playersList.indexOf(p));
+
+
+                                    }
+                                    //else hien noti, end turn
                                 }
                             });
 
@@ -267,11 +298,86 @@ public class GamePlayActivity extends AppCompatActivity {
 
                     }
                 });
+
+                btnWar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listActionDialog.setVisibility(View.INVISIBLE);
+                        listActionDialogVisible=false;
+                        tvInfoDialog.setText("Choose player you want to war with");
+                        infoDialog.setVisibility(View.VISIBLE);
+                        btnOkInfoDialog.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                infoDialog.setVisibility(View.INVISIBLE);
+                                traderChosen = true;
+                            }
+                        });
+                    }
+                });
+
+
             }
 
 
   //      }
+
+
     }
+
+    //hàm sida
+
+    public void  effectOfItemTrade(Host h, Item i, int indexSender, int indexReceiver){
+        Player sender = h.playersList.get(indexSender);
+        Player receiver = h.playersList.get(indexReceiver);
+        switch (i.getItemType()){
+            case 5: //broken mirror
+                //
+                break;
+            case 2: //bag
+            case 3:
+                Item itemDraw= host.itemsLeft.get(host.itemsLeft.size()-1);
+                sender.itemsList.remove(i);
+                sender.itemsList.add(itemDraw);
+
+                host.itemsLeft.remove(itemDraw);
+
+                break;
+            case 4:
+                //auto nhan
+                //hien info dialog
+                break;
+            case 7:
+                //doi 1 occu voi occuLeft
+                //hien dialog voi
+                //hien bang occuLeft
+                break;
+            case 10:
+                //xem team receiver
+                break;
+            case 12:
+                //xem itemlist receiver
+                break;
+            case 13:
+                //sextant
+                //hien chon item chuyen di
+                //chon nguoi ben canh
+            case 15:
+                //doi occu voi receiver
+                Occupation o = sender.getOccupation();
+                sender.setOccupation(receiver.getOccupation());
+                receiver.setOccupation(o);
+                sender.getOccupation().setUsed(false);
+                receiver.getOccupation().setUsed(false);
+                break;
+            default:
+                break;
+        }
+
+
+
+    }
+
 
 
 }

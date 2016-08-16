@@ -2,13 +2,14 @@ package com.example.hoangelato.coachridetodevilcastle;
 
 import com.example.hoangelato.coachridetodevilcastle.Network.Client;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
 /**
  * Created by Hoangelato on 26/07/2016.
  */
-public class Player implements PlayerActions{
+public class Player implements PlayerActions, Serializable{
     public static final String USERNAME_TAG = "player";
     private String username;
     private int team;
