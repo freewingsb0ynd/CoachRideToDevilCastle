@@ -53,7 +53,7 @@ public class Player implements PlayerActions, Serializable{
 
     public Player() {}
 
-    public Player(String userame, Host host) {
+    public Player(String userame, Host host, GamePlayActivity gamePlayActivity) {
         this(userame);
 
         this.host = host;
@@ -73,6 +73,11 @@ public class Player implements PlayerActions, Serializable{
 
     @Override
     public void trade(Player p) {
+
+
+
+
+
 
     }
 

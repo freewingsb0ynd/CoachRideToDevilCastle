@@ -11,6 +11,7 @@ import java.util.Vector;
  * Created by Hoangelato on 26/07/2016.
  */
 public class Host {
+    private final GamePlayActivity gm;
     public ArrayList<Occupation> occupationsLeft;
     public ArrayList<Item> itemsLeft;
     public ArrayList<Player> playersList;
@@ -26,12 +27,13 @@ public class Host {
     Player humanPlayer, botPlayer1, botPlayer2, botPlayer3, botPlayer4, botPlayer5, botPlayer6, botPlayer7;
 
 
-    public Host() {
+    public Host(GamePlayActivity gm) {
         occupationsLeft = new ArrayList<Occupation>();
         itemsLeft = new ArrayList<Item>();
         playersList = new ArrayList<Player>();
         wonTeam = 0;
         gameTurn=0;
+        this.gm=gm;
 
         //init
         initPlayers();
@@ -55,14 +57,14 @@ public class Host {
         //ban dau chi tao ra 1 doi tuong nguoi choi co the tương tac.
         //7 con BOT
 
-        humanPlayer =new Player("Day la nguoi choi",this); playersList.add(humanPlayer);
-        botPlayer1 =new Player("Day la Bot1      ",this);  playersList.add(botPlayer1);
-        botPlayer2 =new Player("Day la Bot2      ",this);  playersList.add(botPlayer2);
-        botPlayer3 =new Player("Day la Bot3      ",this);  playersList.add(botPlayer3);
-        botPlayer4 =new Player("Day la Bot4      ",this);  playersList.add(botPlayer4);
-        botPlayer5 =new Player("Day la Bot5      ",this);  playersList.add(botPlayer5);
-        botPlayer6 =new Player("Day la Bot6      ",this);  playersList.add(botPlayer6);
-        botPlayer7 =new Player("Day la Bot7      ",this);  playersList.add(botPlayer7);
+        humanPlayer =new Player("Day la nguoi choi",this,gm); playersList.add(humanPlayer);
+        botPlayer1 =new Player("Day la Bot1      ",this,gm);  playersList.add(botPlayer1);
+        botPlayer2 =new Player("Day la Bot2      ",this,gm);  playersList.add(botPlayer2);
+        botPlayer3 =new Player("Day la Bot3      ",this,gm);  playersList.add(botPlayer3);
+        botPlayer4 =new Player("Day la Bot4      ",this,gm);  playersList.add(botPlayer4);
+        botPlayer5 =new Player("Day la Bot5      ",this,gm);  playersList.add(botPlayer5);
+        botPlayer6 =new Player("Day la Bot6      ",this,gm);  playersList.add(botPlayer6);
+        botPlayer7 =new Player("Day la Bot7      ",this,gm);  playersList.add(botPlayer7);
     }
 
     private void initGame() {

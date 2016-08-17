@@ -1,5 +1,7 @@
 package com.example.hoangelato.coachridetodevilcastle;
 
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
