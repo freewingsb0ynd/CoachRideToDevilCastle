@@ -530,16 +530,16 @@
             android:text="Choose one item that you want to take"/>
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="240dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/width_checked_team_and_occu_dialog"
+        android:layout_height="@dimen/height_checked_team_and_occu_dialog"
         android:layout_centerInParent="true"
         android:background="@color/colorDialog"
         android:id="@+id/checked_team_and_occu_dialog"
         android:visibility="invisible"
         >
         <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="160dp"
+            android:layout_width="@dimen/width2CardLargeSize"
+            android:layout_height="@dimen/heightCardLargeSize"
             android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:id="@+id/checked_team_and_occu_container"
@@ -556,11 +556,11 @@
             android:id="@+id/checked_occu_slot"/>
         </LinearLayout>
         <Button
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/width_btn_checked_team_and_occu_dialog"
+            android:layout_height="@dimen/height_btn_checked_team_and_occu_dialog"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:id="@+id/checked_team_and_occu_done"
+            android:id="@+id/btn_checked_team_and_occu_done"
             android:text="Ok"
             >
         </Button>
@@ -568,43 +568,37 @@
 
 
 
-    <RelativeLayout
-        android:layout_width="240dp"
-        android:layout_height="200dp"
+    <LinearLayout
+        android:layout_width="@dimen/width_won_list_actions_dialog"
+        android:layout_height="@dimen/height_won_list_actions_dialog"
         android:layout_centerInParent="true"
         android:background="@color/colorDialog"
         android:id="@+id/won_list_actions_dialog"
+        android:padding="@dimen/padding_won_list_actions_dialog"
+        android:orientation="vertical"
         android:visibility="invisible"
         >
-        <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="160dp"
-            android:orientation="vertical"
-            android:layout_centerInParent="true"
-            android:id="@+id/won_list_actions_container"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="You won this duel. Choose what to do with loser"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="You won this duel. Choose what to do with loser"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                android:id="@+id/btn_check_team_and_occu"
-                android:textAllCaps="false"
-                android:text="Check Team and Occupation"
-                />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                android:id="@+id/btn_check_items"
-                android:textAllCaps="false"
-                android:text="Check Items"
-                />
-        </LinearLayout>
-    </RelativeLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:id="@+id/btn_check_team_and_occu"
+            android:textAllCaps="false"
+            android:text="Check Team and Occupation"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:id="@+id/btn_check_items"
+            android:textAllCaps="false"
+            android:text="Check Items"
+            />
+    </LinearLayout>
 </RelativeLayout>
