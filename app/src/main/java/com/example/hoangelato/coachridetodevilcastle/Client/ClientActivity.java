@@ -1,6 +1,7 @@
 package com.example.hoangelato.coachridetodevilcastle.Client;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,26 +11,34 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.hoangelato.coachridetodevilcastle.CustomView.MyAdapter;
 import com.example.hoangelato.coachridetodevilcastle.CustomView.MyDataNode;
 import com.example.hoangelato.coachridetodevilcastle.CustomView.OnItemClickListener;
+import com.example.hoangelato.coachridetodevilcastle.Host;
 import com.example.hoangelato.coachridetodevilcastle.Network.Client;
 import com.example.hoangelato.coachridetodevilcastle.Network.NetworkNode;
 import com.example.hoangelato.coachridetodevilcastle.Network.ProgressListener;
+import com.example.hoangelato.coachridetodevilcastle.Network.Server;
+import com.example.hoangelato.coachridetodevilcastle.Network.ThreadHelper;
 import com.example.hoangelato.coachridetodevilcastle.Player;
 import com.example.hoangelato.coachridetodevilcastle.R;
 
 import java.util.Enumeration;
 import java.util.Vector;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class ClientActivity extends AppCompatActivity {
 
-    RecyclerView availableServers;
     Client mClient;
     String serverToConnect = "null";
-    SwipeRefreshLayout contentView;
+    EditText editTextIp;
+    Button buttonConnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,66 +48,26 @@ public class ClientActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        availableServers = (RecyclerView) findViewById(R.id.server_list);
-        contentView = (SwipeRefreshLayout) findViewById(R.id.content_view);
+        editTextIp = (EditText) findViewById(R.id.ip_to_connect);
+        buttonConnect =(Button) findViewById(R.id.connect);
+
         mClient = new Client(this) {
             @Override
             public void customInitialData(Bundle data) {
                 data.putString(NetworkNode.NAME_TAG, getIntent().getStringExtra(Player.USERNAME_TAG));
+                Host host = new Host();
+                host.test = 10;
+                data.putSerializable("hihi", host);
             }
         };
 
-        final AvailableServersAdapter availableServersAdapter = new AvailableServersAdapter(
-                this, new Vector<ServerInfo>()
-                , new OnItemClickListener<AvailableServersAdapter.ServerInfoViewHolder>() {
-                    @Override
-                    public void onItemClick(AvailableServersAdapter.ServerInfoViewHolder myViewHolder) {
-                        serverToConnect = myViewHolder.data.serverIp;
-                    }
-                }
-        );
-
-        availableServers.setAdapter(availableServersAdapter);
-        availableServers.setLayoutManager(new LinearLayoutManager(this));
-        contentView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                final Vector<ServerInfo> serverInfos = new Vector<ServerInfo>();
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mClient.findServersIp(new ProgressListener<Vector<String>>() {
-                            @Override
-                            public void onUpdateProgress(double percentage) {
-                                Log.e("ClientAct", String.valueOf(percentage));
-                            }
-
-                            @Override
-                            public void onDone(Vector<String> result) {
-                                Enumeration<String> ip = result.elements();
-                                while(ip.hasMoreElements()) {
-                                    serverInfos.add(new ServerInfo("client", ip.nextElement()));
-                                }
-                                Log.e("ClientAct", "done refreshing");
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        availableServersAdapter.setDataList(serverInfos);
-                                        contentView.setRefreshing(false);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }).start();
-
+            public void onClick(View v) {
+                mClient.connectToHost(editTextIp.getText().toString(), 6969);
+                Log.e("ClientAct","Connected");
             }
         });
-        contentView.setColorSchemeColors(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
     }
 
     class ServerInfo implements MyDataNode {

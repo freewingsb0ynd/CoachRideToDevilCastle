@@ -31,4 +31,23 @@ public class ThreadHelper {
 
         return null;
     }
+
+    public static <T> T executeTaskWithTimeoutNew(Callable<T> callable, int timeout ) throws TimeoutException {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<T> future = executor.submit(callable);
+
+        try {
+            T result = future.get(timeout, TimeUnit.MILLISECONDS);
+            return result;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return null;
+    }
 }

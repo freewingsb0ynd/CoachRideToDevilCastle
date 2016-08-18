@@ -13,6 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hoangelato.coachridetodevilcastle.Network.Client;
+import com.example.hoangelato.coachridetodevilcastle.Network.Connection;
+import com.example.hoangelato.coachridetodevilcastle.Network.EventListener;
+import com.example.hoangelato.coachridetodevilcastle.Network.NetworkNode;
+import com.example.hoangelato.coachridetodevilcastle.Network.Server;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -20,6 +26,7 @@ import java.util.concurrent.TransferQueue;
 
 public class GamePlayActivity extends AppCompatActivity {
     public static Host host;
+    Client mClient;
     ImageView imgPlayer1Team; ImageButton imgPlayer1Occu;
     ImageView imgPlayer2item, imgPlayer2Occu;
     ImageView imgPlayer3item, imgPlayer3Occu;
@@ -90,9 +97,50 @@ public class GamePlayActivity extends AppCompatActivity {
         hostNumberofOccu.setText(host.occupationsLeft.size()+"");
     }
 
+    public void updateToHost() {
+        Bundle bundle = new Bundle();
+        bundle.putString(NetworkNode.ACTION_TAG, Host.UPDATE_DATA);
+        bundle.putSerializable("host", host);
+
+        mClient.send(0, bundle);
+    }
 
     private void initHost() {
-        host=new Host(this);
+        mClient.addEventListener(new EventListener() {
+            @Override
+            public void onDataReceived(Bundle data, Connection connection) {
+                String action = data.getString(NetworkNode.ACTION_TAG);
+
+                if (action.equals("new Host")) {
+                    host = (Host) data.getSerializable("Host");
+                }
+            }
+
+            @Override
+            public void onNewConnection(Connection connection) {
+
+            }
+
+            @Override
+            public void onConnectFail(String reason, String destinationIp) {
+
+            }
+
+            @Override
+            public void onInitialDataReceived(Bundle data, Connection connection) {
+
+            }
+
+            @Override
+            public void onDisconnected(Bundle message, Connection connection) {
+
+            }
+
+            @Override
+            public void onLosingConnection(Connection connection) {
+
+            }
+        });
         //connect to host
         //p = new Player("This device", host);
 
@@ -274,6 +322,8 @@ public class GamePlayActivity extends AppCompatActivity {
                                                 bundleChosedItem = finalJ;
                                                 itemsSlot.setVisibility(View.INVISIBLE);
                                                 itemsOnHandDialogVisible = false;
+
+
                                                 tradePutToHost.putSerializable("ChosedItems", p.itemsList.get(bundleChosedItem));
                                             }
                                         });

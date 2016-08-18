@@ -84,7 +84,7 @@ public class HostWaitingActivity extends AppCompatActivity {
         mServer.addEventListener(new EventListener() {
             @Override
             public void onDataReceived(Bundle data, Connection connection) {
-
+                Log.e("HostAct", data.getString(NetworkNode.ACTION_TAG));
             }
 
             @Override
@@ -110,6 +110,8 @@ public class HostWaitingActivity extends AppCompatActivity {
                         Log.e("Host", "new client");
                     }
                 });
+                Host host = (Host)data.getSerializable("hihi");
+                Log.e("hihi", String.valueOf(host.test));
 
             }
 

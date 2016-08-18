@@ -1,17 +1,30 @@
 package com.example.hoangelato.coachridetodevilcastle;
 
-import java.lang.reflect.Array;
+import android.os.Bundle;
+
+import com.example.hoangelato.coachridetodevilcastle.Network.Connection;
+import com.example.hoangelato.coachridetodevilcastle.Network.EventListener;
+import com.example.hoangelato.coachridetodevilcastle.Network.NetworkNode;
+import com.example.hoangelato.coachridetodevilcastle.Network.Server;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 /**
  * Created by Hoangelato on 26/07/2016.
  */
-public class Host {
-    private final GamePlayActivity gm;
+public class Host implements Serializable{
+    public static final String OCCUPATIONS = "occupation";
+    public static final String ITEMS = "item";
+    public static final String PLAYERS = "player";
+    public static final String SEND_DATA = "sendData data";
+    public static final String UPDATE_DATA ="update data";
+    public static final String DATA_TYPE = "data type";
+    public static final String QUERY_DATA = "query data";
+
+    public int test;
     public ArrayList<Occupation> occupationsLeft;
     public ArrayList<Item> itemsLeft;
     public ArrayList<Player> playersList;
@@ -19,6 +32,7 @@ public class Host {
     public int[] teamBudget= {1, 1, 1, 1, 2, 2, 2, 2};
     public int[] orderList= {1, 2, 3, 4, 5, 6, 7, 8};
     public int wonTeam;
+    public Server mServer;
     Occupation occupation0, occupation1, occupation2, occupation3, occupation4,
             occupation5, occupation6, occupation7, occupation8, occupation9;
     Item item0, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10,
@@ -26,14 +40,55 @@ public class Host {
 
     Player humanPlayer, botPlayer1, botPlayer2, botPlayer3, botPlayer4, botPlayer5, botPlayer6, botPlayer7;
 
+    public Host() {
+        occupationsLeft = new ArrayList<Occupation>();
+        itemsLeft = new ArrayList<Item>();
+        playersList = new ArrayList<Player>();
+    }
 
-    public Host(GamePlayActivity gm) {
+    public Host(GamePlayActivity gm, final Server mServer) {
         occupationsLeft = new ArrayList<Occupation>();
         itemsLeft = new ArrayList<Item>();
         playersList = new ArrayList<Player>();
         wonTeam = 0;
         gameTurn=0;
-        this.gm=gm;
+        this.mServer = mServer;
+
+        mServer.addEventListener(new EventListener() {
+            @Override
+            public void onDataReceived(Bundle data, Connection connection) {
+                String action = data.getString(NetworkNode.ACTION_TAG);
+
+                if (action.equals(UPDATE_DATA)) {
+                    updateData((Host) data.getSerializable("Host"));
+                }
+            }
+
+            @Override
+            public void onNewConnection(Connection connection) {
+
+            }
+
+            @Override
+            public void onConnectFail(String reason, String destinationIp) {
+
+            }
+
+            @Override
+            public void onInitialDataReceived(Bundle data, Connection connection) {
+
+            }
+
+            @Override
+            public void onDisconnected(Bundle message, Connection connection) {
+
+            }
+
+            @Override
+            public void onLosingConnection(Connection connection) {
+
+            }
+        });
 
         //init
         initPlayers();
@@ -57,23 +112,23 @@ public class Host {
         //ban dau chi tao ra 1 doi tuong nguoi choi co the tương tac.
         //7 con BOT
 
-        humanPlayer =new Player("Day la nguoi choi",this,gm); playersList.add(humanPlayer);
+        /*humanPlayer =new Player("Day la nguoi choi",this,gm); playersList.add(humanPlayer);
         botPlayer1 =new Player("Day la Bot1      ",this,gm);  playersList.add(botPlayer1);
         botPlayer2 =new Player("Day la Bot2      ",this,gm);  playersList.add(botPlayer2);
         botPlayer3 =new Player("Day la Bot3      ",this,gm);  playersList.add(botPlayer3);
         botPlayer4 =new Player("Day la Bot4      ",this,gm);  playersList.add(botPlayer4);
         botPlayer5 =new Player("Day la Bot5      ",this,gm);  playersList.add(botPlayer5);
         botPlayer6 =new Player("Day la Bot6      ",this,gm);  playersList.add(botPlayer6);
-        botPlayer7 =new Player("Day la Bot7      ",this,gm);  playersList.add(botPlayer7);
+        botPlayer7 =new Player("Day la Bot7      ",this,gm);  playersList.add(botPlayer7);*/
     }
 
     private void initGame() {
         //init order for players
-        shuffleArray(orderList);
+/*        shuffleArray(orderList);
         for (int i = 0; i < 8; i++){
             for (Player p: playersList)
                 if (orderList[playersList.indexOf(p)]==i) Collections.swap(playersList,i,playersList.indexOf(p));
-        }
+        }*/
 
         //separate 2 teams
         shuffleArray(teamBudget);
@@ -182,7 +237,20 @@ public class Host {
         gameTurn++;
     }
 
+    public void updateDataToPlayer() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Host", this);
+        bundle.putString(NetworkNode.ACTION_TAG, "new Host");
 
+        mServer.sendToAll(bundle);
+    }
 
+    public void updateData(Host newHost) {
+        //update data
+        this.itemsLeft = newHost.itemsLeft;
+        this.playersList = newHost.playersList;
+        this.occupationsLeft = newHost.occupationsLeft;
 
+        updateDataToPlayer();
+    }
 }

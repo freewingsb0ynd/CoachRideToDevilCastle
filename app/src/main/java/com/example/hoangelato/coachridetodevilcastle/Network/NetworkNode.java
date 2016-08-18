@@ -29,6 +29,8 @@ import java.util.concurrent.TimeoutException;
 public class NetworkNode {
 
     public static final String ACTION_TAG = "action";
+    public static final String EXPECTED_ACTION_TAG = "expected action";
+
     public static final String ACTION_DISCONNECT = "disconnect";
     public static final String ACTION_CHECK_IF_CONNECTION_ALIVE = "check";
     public static final String ACTION_SEND_INITIAL_DATA = "sending initial data";
@@ -183,6 +185,8 @@ public class NetworkNode {
         while (solvers.hasMoreElements()) {
             solvers.nextElement().onDataReceived(dataReceived, connection);
         }
+
+        Log.e("Network", "new data from " + String.valueOf(connections.indexOf(connection)));
     }
 
     void newConnection(Connection connection) {
@@ -197,6 +201,8 @@ public class NetworkNode {
         while (solvers.hasMoreElements()) {
             solvers.nextElement().onConnectFail(reason, destinationIp);
         }
+
+        Log.e("Network", "can't connect to " + destinationIp);
     }
 
     void initialDataReceived(Bundle data, Connection connection) {
@@ -204,6 +210,8 @@ public class NetworkNode {
         while (solvers.hasMoreElements()) {
             solvers.nextElement().onInitialDataReceived(data, connection);
         }
+
+        Log.e("Network", "received initial data from " + String.valueOf(connections.indexOf(connection)));
     }
 
     void disconnected(Bundle message, Connection connection) {
@@ -211,6 +219,8 @@ public class NetworkNode {
         while (solvers.hasMoreElements()) {
             solvers.nextElement().onDisconnected(message, connection);
         }
+
+        Log.e("Network", "disconnected with " + String.valueOf(connections.indexOf(connection)));
     }
 
     void losingConnection(Connection connection) {
@@ -218,6 +228,8 @@ public class NetworkNode {
         while (solvers.hasMoreElements()) {
             solvers.nextElement().onLosingConnection(connection);
         }
+
+        Log.e("Network", "losing connection to " + String.valueOf(connections.indexOf(connection)));
     }
 
 
@@ -230,8 +242,11 @@ public class NetworkNode {
         try {
             connection.mObjectWriter.writeInt(bytes.length);
             connection.mObjectWriter.write(bytes);
+
+            Log.e("Network", "sent data to" + String.valueOf(connections.indexOf(connection)));
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("Network", "can't sendData data to" + String.valueOf(connections.indexOf(connection)));
         }
     }
 
@@ -266,6 +281,8 @@ public class NetworkNode {
 
         dataListenerThread.interrupt();
         connectionChecker.onDestroy();
+
+        Log.e("Network", "destroyed");
     }
 
     class ListenForDataThread extends Thread {
@@ -273,8 +290,8 @@ public class NetworkNode {
         public void run() {
             while (true) {
                 Enumeration<Connection> connection = connections.elements();
-                Log.e("Listen for data Thread",
-                        "number of connection " + String.valueOf(connections.size()));
+                Log.e("Network",
+                        "current number of connection " + String.valueOf(connections.size()));
                 while (connection.hasMoreElements()) {
                     Connection curConnection = connection.nextElement();
                     try {
@@ -295,7 +312,7 @@ public class NetworkNode {
 
                     this.sleep(THREAD_SLEEP_TIME);
                 } catch (InterruptedException e) {
-                    Log.e("Listen for data thread", "interrupted");
+                    Log.e("Network", "data listener thread interrupted");
                     e.printStackTrace();
                     return;
                 }

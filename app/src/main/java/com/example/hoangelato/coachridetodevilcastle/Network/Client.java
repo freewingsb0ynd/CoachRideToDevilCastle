@@ -9,6 +9,10 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -49,6 +53,7 @@ public abstract class Client extends NetworkNode {
         clientThread = new Thread(new ConnectToServer(serverAddress, serverPort));
         clientThread.start();
     }
+
     private class ConnectToServer extends Thread {
         String serverAddress;
         int serverPort;
@@ -88,14 +93,14 @@ public abstract class Client extends NetworkNode {
     }
 
 
-    static class SearchIp extends Thread {
+    static class SearchIp implements Runnable {
         int start, end;
-        Vector<String> result = new Vector<>();
+        Vector<Bundle> result = new Vector<>();
         ProgressListener progressListener;
         byte[] ip;
         Client client;
 
-        public SearchIp(int start, int end, ProgressListener<Vector<String>> progressListener, byte[] ip, Client client) {
+        public SearchIp(int start, int end, ProgressListener<Vector<Bundle>> progressListener, byte[] ip, Client client) {
             this.start = start;
             this.end = end;
             this.progressListener = progressListener;
@@ -113,8 +118,8 @@ public abstract class Client extends NetworkNode {
                     Socket s = new Socket();
                     s.connect(new InetSocketAddress(InetAddress.getByAddress(ip), Server.SERVER_PORT), 1000);
                     Bundle initialData = client.getInitialDataFromConnection(new Connection(s));
-                    result.add(initialData.getString(IP_TAG));
-                    Log.e("Ip searcher", result.lastElement());
+                    result.add(initialData);
+                    Log.e("Ip searcher", initialData.getString(NetworkNode.IP_TAG));
                     s.close();
 
                 } catch (IOException e) {
@@ -130,39 +135,84 @@ public abstract class Client extends NetworkNode {
             progressListener.onDone(result);
         }
     }
-    public void findServersIp(final ProgressListener<Vector<String>> progressListener) {
-        final Vector<String> mResult = new Vector<>(0);
+
+    public void findServersIp(final ProgressListener<Vector<Bundle>> progressListener, int timeOut, TimeUnit timeUnit) {
+        final Vector<Bundle> mResult = new Vector<>(0);
         final int[] count = {0, 0};
         final int total = 254 / SOCKET_PER_THREAD + 1;
         byte[] bytesIp = getBytesCurrentIp();
+        Log.e("Ip searcher: ", String.valueOf((int) bytesIp[0]) + String.valueOf((int) bytesIp[1]) + String.valueOf((int) bytesIp[2]));
+
+        ExecutorService pool = Executors.newFixedThreadPool(total);
 
         for (int i = 0; i <= 254 / SOCKET_PER_THREAD; i++) {
-            new Thread(
+            pool.submit(
                     new SearchIp(i * SOCKET_PER_THREAD + 1, Math.min((i + 1) * SOCKET_PER_THREAD, 255),
-                            new ProgressListener<Vector<String>>() {
+                            new ProgressListener<Vector<Bundle>>() {
                                 @Override
                                 public void onUpdateProgress(double percentage) {
                                     count[0]++;
-                                    progressListener.onUpdateProgress((double) count[0]/255);
+                                    progressListener.onUpdateProgress((double) count[0] / 255);
                                 }
 
                                 @Override
-                                public void onDone(Vector<String> result) {
+                                public void onDone(Vector<Bundle> result) {
                                     count[1]++;
                                     mResult.addAll(result);
                                 }
                             }, bytesIp, this)
-            ).start();
+            );
         }
 
-        while (true) {
-            if (count[1] == total) {
-                progressListener.onDone(mResult);
-                return;
-            }
+        try {
+            pool.awaitTermination(timeOut, timeUnit);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+        pool.shutdownNow();
+        progressListener.onDone(mResult);
+
     }
 
+    public void request(final Bundle req, int pos, final String expectedAction, final ProgressListener<Bundle> progressListener) {
+        send(pos, req);
+
+
+        addEventListener(new EventListener() {
+            @Override
+            public void onDataReceived(Bundle data, Connection connection) {
+                if (expectedAction.equals(data.getString(ACTION_TAG))) {
+                    progressListener.onDone(data);
+                }
+            }
+
+            @Override
+            public void onNewConnection(Connection connection) {
+
+            }
+
+            @Override
+            public void onConnectFail(String reason, String destinationIp) {
+
+            }
+
+            @Override
+            public void onInitialDataReceived(Bundle data, Connection connection) {
+
+            }
+
+            @Override
+            public void onDisconnected(Bundle message, Connection connection) {
+
+            }
+
+            @Override
+            public void onLosingConnection(Connection connection) {
+
+            }
+        });
+    }
 
     @Override
     public void onDestroy() {
