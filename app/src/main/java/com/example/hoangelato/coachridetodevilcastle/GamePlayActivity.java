@@ -39,12 +39,6 @@ public class GamePlayActivity extends AppCompatActivity {
     ImageView imgHostItem, imgHostOccu;
     LinearLayout itemsSlot;
 
-    RelativeLayout checkedItemsDialog;
-    ImageView checkedItem1,checkedItem2,checkedItem3,checkedItem4,checkedItem5;
-    ArrayList<ImageView> checkedItemsView;
-    Button btnOkCheckedItemDialog;
-
-    TextView tvCheckedItemsDialog;
     TextView hostNumberofItems, hostNumberofOccu;
     ImageButton btnItemsOnHand;
     Button btnSupportATK, btnSupportDEF, btnAbstain;
@@ -255,6 +249,10 @@ public class GamePlayActivity extends AppCompatActivity {
         checkedItemsView.add(checkedItem5);
         btnOkCheckedItemDialog = (Button) findViewById(R.id.btn_checked_item_done);
 
+        checkedTeamAndOccuDialog = (RelativeLayout) findViewById(R.id.checked_team_and_occu_dialog);
+        checkedTeamSlot = (ImageView) findViewById(R.id.checked_team_slot);
+        checkedOccuSlot = (ImageView) findViewById(R.id.checked_occu_slot);
+        btnOkCheckedTeamAndOccuDialog = (Button) findViewById(R.id.btn_checked_team_and_occu_done);
 
     }
 
@@ -270,6 +268,19 @@ public class GamePlayActivity extends AppCompatActivity {
     int bundleChosedPlayer, bundleChosedItem;
     ArrayList<ImageView> chooseOneIn7OthersPlayers = new ArrayList<>();
     ArrayList<ImageButton> chooseOneOfYourItems = new ArrayList<>();
+
+
+    RelativeLayout checkedItemsDialog;
+    ImageView checkedItem1,checkedItem2,checkedItem3,checkedItem4,checkedItem5;
+    ArrayList<ImageView> checkedItemsView;
+    Button btnOkCheckedItemDialog;
+
+    TextView tvCheckedItemsDialog;
+
+    RelativeLayout checkedTeamAndOccuDialog;
+    ImageView checkedTeamSlot;
+    ImageView checkedOccuSlot;
+    Button btnOkCheckedTeamAndOccuDialog;
 
     private void gameplay() {
  //       while (host.wonTeam==0) {  //khi chua ben nao thang
@@ -323,7 +334,6 @@ public class GamePlayActivity extends AppCompatActivity {
                                                 itemsSlot.setVisibility(View.INVISIBLE);
                                                 itemsOnHandDialogVisible = false;
 
-
                                                 tradePutToHost.putSerializable("ChosedItems", p.itemsList.get(bundleChosedItem));
                                             }
                                         });
@@ -354,12 +364,17 @@ public class GamePlayActivity extends AppCompatActivity {
                                         else if (itemReceived.getItemType()==5){
                                             //sout "You had received Broken Mirror. Your trade-in effect of your item had been prevented"
                                         }
-                                        else switch (itemSent.getItemType()){
+                                        else {
+                                            p.itemsList.remove(itemSent);
+                                            p.itemsList.add(itemReceived);
+
+                                            switch (itemSent.getItemType()) {
                                                 case 2: //bag
                                                 case 3:
-                                                    p.itemsList.remove(itemSent);
-                                                    Item itemDraw= host.itemsLeft.get(host.itemsLeft.size()-1);
+
+                                                    Item itemDraw = host.itemsLeft.get(host.itemsLeft.size() - 1);
                                                     p.itemsList.add(itemDraw);
+
                                                     host.itemsLeft.remove(itemDraw);
                                                     sendSignalByItemType(itemReceived.getItemType());
 
@@ -368,10 +383,10 @@ public class GamePlayActivity extends AppCompatActivity {
                                                 case 7:
                                                     Occupation occuSwap = p.getOccupation();
                                                     occuSwap.setUsed(false);
-                                                    occuSwap.isOccupied=false;
+                                                    occuSwap.isOccupied = false;
 
                                                     p.setOccupation(host.occupationsLeft.get(0));
-                                                    p.getOccupation().isOccupied=true;
+                                                    p.getOccupation().isOccupied = true;
                                                     imgPlayer1Occu.setImageResource(p.getOccupation().getOccupationSrc());
 
                                                     host.occupationsLeft.remove(p.getOccupation());
@@ -380,20 +395,27 @@ public class GamePlayActivity extends AppCompatActivity {
                                                     //hien dialog thong bao voi nguoi choi khac
                                                     break;
                                                 case 10:
-
-
+                                                    checkedTeamSlot.setImageResource(
+                                                            (playerTraded.getTeam() == 1) ? R.drawable.team_blue : R.drawable.team_red);
+                                                    checkedTeamAndOccuDialog.setVisibility(View.VISIBLE);
+                                                    btnOkCheckedTeamAndOccuDialog.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            checkedTeamAndOccuDialog.setVisibility(View.INVISIBLE);
+                                                        }
+                                                    });
 
                                                     //xem team receiver
 
                                                     //hien dialog thong bao voi nguoi choi khac
                                                     break;
                                                 case 12:
-                                                    for (int k=0; k<playerTraded.itemsList.size(); k++){
+                                                    for (int k = 0; k < playerTraded.itemsList.size(); k++) {
                                                         checkedItemsView.get(k).setImageResource(playerTraded.itemsList.get(k).getItemSrc());
                                                     }
-
-                                                    checkedItemsDialog.setVisibility(View.VISIBLE);
                                                     tvCheckedItemsDialog.setVisibility(View.INVISIBLE);
+                                                    checkedItemsDialog.setVisibility(View.VISIBLE);
+
 
                                                     btnOkCheckedItemDialog.setOnClickListener(new View.OnClickListener() {
                                                         @Override
@@ -410,6 +432,21 @@ public class GamePlayActivity extends AppCompatActivity {
                                                     //sextant
                                                     //hien chon item chuyen di
                                                     //chon nguoi ben canh
+                                                    Bundle tradeBySextant;
+                                                    for (int j = 0; j < p.itemsList.size(); j++) {
+                                                        final int finalJ = j;
+                                                        chooseOneOfYourItems.get(j).setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                bundleChosedItem = finalJ;
+                                                                itemsSlot.setVisibility(View.INVISIBLE);
+                                                                itemsOnHandDialogVisible = false;
+
+                                                                tradePutToHost.putSerializable("ChosedItems", p.itemsList.get(bundleChosedItem));
+                                                            }
+                                                        });
+                                                    }
+
 
                                                     //hien dialog thong bao voi nguoi choi khac
                                                     break;
@@ -429,6 +466,8 @@ public class GamePlayActivity extends AppCompatActivity {
 
                                             }
 
+                                            updateToHost();
+                                        }
 
                                         //switch ()
 
