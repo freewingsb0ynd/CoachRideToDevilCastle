@@ -6,8 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bloe.rewrite.R;
-import com.example.bloe.rewrite.databinding.ItemConnectedPlayerBinding;
+
+import com.example.hoangelato.coachridetodevilcastle.R;
+import com.example.hoangelato.coachridetodevilcastle.databinding.ItemConnectedPlayerBinding;
 
 import java.util.Vector;
 

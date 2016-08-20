@@ -8,17 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
 
-import com.example.bloe.rewrite.Activities.GameplayActivities.GameplayActivity;
-import com.example.bloe.rewrite.CustomView.ConnectedPlayerAdapter;
-import com.example.bloe.rewrite.CustomView.PlayerInfo;
-import com.example.bloe.rewrite.GameModels.GameTags;
-import com.example.bloe.rewrite.GameModels.Player;
-import com.example.bloe.rewrite.Network.Client;
-import com.example.bloe.rewrite.Network.Connection;
-import com.example.bloe.rewrite.Network.EventListener;
-import com.example.bloe.rewrite.Network.NetworkTags;
-import com.example.bloe.rewrite.R;
-import com.example.bloe.rewrite.databinding.ClientWaitingActivityBinding;
+
+import com.example.hoangelato.coachridetodevilcastle.Activities.GameplayActivities.GameplayActivity;
+import com.example.hoangelato.coachridetodevilcastle.CustomView.ConnectedPlayerAdapter;
+import com.example.hoangelato.coachridetodevilcastle.CustomView.PlayerInfo;
+import com.example.hoangelato.coachridetodevilcastle.GameModels.GameTags;
+import com.example.hoangelato.coachridetodevilcastle.GameModels.Player;
+import com.example.hoangelato.coachridetodevilcastle.Network.Client;
+import com.example.hoangelato.coachridetodevilcastle.Network.Connection;
+import com.example.hoangelato.coachridetodevilcastle.Network.EventListener;
+import com.example.hoangelato.coachridetodevilcastle.Network.NetworkTags;
+import com.example.hoangelato.coachridetodevilcastle.R;
+import com.example.hoangelato.coachridetodevilcastle.databinding.ClientWaitingActivityBinding;
 
 import java.util.ArrayList;
 import java.util.Vector;

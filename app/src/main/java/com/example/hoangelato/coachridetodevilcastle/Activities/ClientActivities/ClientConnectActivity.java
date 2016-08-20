@@ -9,12 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.bloe.rewrite.Activities.MainActivity;
-import com.example.bloe.rewrite.Network.Client;
-import com.example.bloe.rewrite.Network.NetworkTags;
-import com.example.bloe.rewrite.Network.Server;
-import com.example.bloe.rewrite.R;
-import com.example.bloe.rewrite.databinding.ClientConnectActivityBinding;
+import com.example.hoangelato.coachridetodevilcastle.Activities.MainActivity;
+import com.example.hoangelato.coachridetodevilcastle.Network.Client;
+import com.example.hoangelato.coachridetodevilcastle.Network.NetworkTags;
+import com.example.hoangelato.coachridetodevilcastle.Network.Server;
+import com.example.hoangelato.coachridetodevilcastle.R;
+import com.example.hoangelato.coachridetodevilcastle.databinding.ClientConnectActivityBinding;
+
 
 /**
  * Created by bloe on 18/08/2016.

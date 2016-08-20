@@ -9,13 +9,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bloe.rewrite.Activities.ClientActivities.ClientWaitingActivity;
-import com.example.bloe.rewrite.Activities.HostActivities.HostWaitingActivity;
-import com.example.bloe.rewrite.GameModels.GameTags;
-import com.example.bloe.rewrite.GameModels.Player;
-import com.example.bloe.rewrite.GameModels.PlayerData;
-import com.example.bloe.rewrite.R;
-import com.example.bloe.rewrite.databinding.GamePlayActivityBinding;
+
+import com.example.hoangelato.coachridetodevilcastle.Activities.ClientActivities.ClientWaitingActivity;
+import com.example.hoangelato.coachridetodevilcastle.Activities.HostActivities.HostWaitingActivity;
+import com.example.hoangelato.coachridetodevilcastle.GameModels.GameTags;
+import com.example.hoangelato.coachridetodevilcastle.GameModels.Player;
+import com.example.hoangelato.coachridetodevilcastle.GameModels.PlayerData;
+import com.example.hoangelato.coachridetodevilcastle.R;
+import com.example.hoangelato.coachridetodevilcastle.databinding.GamePlayActivityBinding;
 
 import java.util.ArrayList;
 

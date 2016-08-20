@@ -5,8 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        android:background="@drawable/game_play"
-        tools:context="com.example.bloe.rewrite.Activities.GameplayActivities.GameplayActivity">
+        android:background="@drawable/game_play">
 
         <RelativeLayout
             android:layout_width="@dimen/width2CardSmallSize"

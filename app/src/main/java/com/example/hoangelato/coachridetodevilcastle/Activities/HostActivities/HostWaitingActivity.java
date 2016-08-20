@@ -11,21 +11,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.bloe.rewrite.Activities.ClientActivities.ClientConnectActivity;
-import com.example.bloe.rewrite.Activities.GameplayActivities.GameplayActivity;
-import com.example.bloe.rewrite.Activities.MainActivity;
-import com.example.bloe.rewrite.CustomView.ConnectedPlayerAdapter;
-import com.example.bloe.rewrite.CustomView.PlayerInfo;
-import com.example.bloe.rewrite.GameModels.GameTags;
-import com.example.bloe.rewrite.GameModels.Host;
-import com.example.bloe.rewrite.GameModels.Player;
-import com.example.bloe.rewrite.Network.Client;
-import com.example.bloe.rewrite.Network.Connection;
-import com.example.bloe.rewrite.Network.EventListener;
-import com.example.bloe.rewrite.Network.NetworkTags;
-import com.example.bloe.rewrite.Network.Server;
-import com.example.bloe.rewrite.R;
-import com.example.bloe.rewrite.databinding.HostWaitingActivityBinding;
+
+import com.example.hoangelato.coachridetodevilcastle.Activities.ClientActivities.ClientConnectActivity;
+import com.example.hoangelato.coachridetodevilcastle.Activities.GameplayActivities.GameplayActivity;
+import com.example.hoangelato.coachridetodevilcastle.Activities.MainActivity;
+import com.example.hoangelato.coachridetodevilcastle.CustomView.ConnectedPlayerAdapter;
+import com.example.hoangelato.coachridetodevilcastle.CustomView.PlayerInfo;
+import com.example.hoangelato.coachridetodevilcastle.GameModels.GameTags;
+import com.example.hoangelato.coachridetodevilcastle.GameModels.Host;
+import com.example.hoangelato.coachridetodevilcastle.GameModels.Player;
+import com.example.hoangelato.coachridetodevilcastle.Network.Client;
+import com.example.hoangelato.coachridetodevilcastle.Network.Connection;
+import com.example.hoangelato.coachridetodevilcastle.Network.EventListener;
+import com.example.hoangelato.coachridetodevilcastle.Network.NetworkTags;
+import com.example.hoangelato.coachridetodevilcastle.Network.Server;
+import com.example.hoangelato.coachridetodevilcastle.R;
+import com.example.hoangelato.coachridetodevilcastle.databinding.HostWaitingActivityBinding;
 
 import java.util.Vector;
 

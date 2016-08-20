@@ -2,7 +2,9 @@ package com.example.hoangelato.coachridetodevilcastle.GameModels;
 
 import android.os.Bundle;
 
+import com.example.hoangelato.coachridetodevilcastle.Network.Connection;
 import com.example.hoangelato.coachridetodevilcastle.Network.EventListener;
+import com.example.hoangelato.coachridetodevilcastle.Network.NetworkTags;
 import com.example.hoangelato.coachridetodevilcastle.Network.Server;
 
 

@@ -7,10 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.bloe.rewrite.Activities.ClientActivities.ClientConnectActivity;
-import com.example.bloe.rewrite.Activities.HostActivities.HostWaitingActivity;
-import com.example.bloe.rewrite.R;
-import com.example.bloe.rewrite.databinding.ActivityMainBinding;
+import com.example.hoangelato.coachridetodevilcastle.Activities.ClientActivities.ClientConnectActivity;
+import com.example.hoangelato.coachridetodevilcastle.Activities.HostActivities.HostWaitingActivity;
+import com.example.hoangelato.coachridetodevilcastle.R;
+import com.example.hoangelato.coachridetodevilcastle.databinding.ActivityMainBinding;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
