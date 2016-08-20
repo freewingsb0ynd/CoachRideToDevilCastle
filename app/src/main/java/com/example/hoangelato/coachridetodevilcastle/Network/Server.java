@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.TimeoutException;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeoutException;
  * Created by bloe on 07/08/2016.
  */
 
-public abstract class Server extends NetworkNode {
+public abstract class Server extends NetworkNode implements Serializable {
     public static final int SERVER_PORT = 6969;
     public static final String NAME = "SERVER";
 
@@ -46,8 +47,8 @@ public abstract class Server extends NetworkNode {
     private Bundle getInitialData() {
         Bundle initialData = new Bundle();
 
-        initialData.putString(IP_TAG, getStringCurrentIp());
-        initialData.putString(ACTION_TAG, ACTION_SEND_INITIAL_DATA);
+        initialData.putString(NetworkTags.IP_TAG, getStringCurrentIp());
+        initialData.putString(NetworkTags.ACTION_TAG, NetworkTags.ACTION_SEND_INITIAL_DATA);
 
         customInitialData(initialData);
 
@@ -97,7 +98,6 @@ public abstract class Server extends NetworkNode {
             }
         }
     }
-
 
     @Override
     public void onDestroy() {

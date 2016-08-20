@@ -1,13 +1,13 @@
-package com.example.hoangelato.coachridetodevilcastle;
+package com.example.hoangelato.coachridetodevilcastle.GameModels;
 
-import android.os.Parcelable;
+import com.example.bloe.rewrite.R;
 
 import java.io.Serializable;
 
 /**
  * Created by Hoangelato on 26/07/2016.
  */
-public class Item implements Serializable{
+public class Item implements Serializable {
     private int itemType;
     private int itemSrc;
     public boolean isOwned;

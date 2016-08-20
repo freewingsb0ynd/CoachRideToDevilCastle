@@ -50,4 +50,20 @@ public class ThreadHelper {
 
         return null;
     }
+
+    public static void executeTaskWithTimeoutNew(Runnable runnable, int timeout) throws TimeoutException {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future future = executor.submit(runnable);
+
+        try {
+            future.get(timeout, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }

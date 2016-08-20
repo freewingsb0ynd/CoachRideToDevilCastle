@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/fantasyart2"
-    tools:context="com.example.hoangelato.coachridetodevilcastle.MainActivity">
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.example.bloe.rewrite.Activities.MainActivity">
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Create new game"
-        android:layout_centerInParent="true"
-        android:id="@+id/btn_create"/>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="Create new game"
+            android:layout_centerInParent="true"
+            android:id="@+id/button_create_game"/>
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Join game"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/btn_create"
-        android:id="@+id/btn_join"/>
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:hint="username"
-        android:layout_above="@id/btn_create"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/username"/>
-</RelativeLayout>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="Join game"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/button_create_game"
+            android:id="@+id/button_join_game"/>
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:hint="username"
+            android:layout_above="@id/button_create_game"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/edit_text_username"/>
+    </RelativeLayout>
+
+</layout>

@@ -8,6 +8,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -15,28 +16,13 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
  * Created by NguyenDuc on 8/5/2016.
  */
 
-public class NetworkNode {
-
-    public static final String ACTION_TAG = "action";
-    public static final String EXPECTED_ACTION_TAG = "expected action";
-
-    public static final String ACTION_DISCONNECT = "disconnect";
-    public static final String ACTION_CHECK_IF_CONNECTION_ALIVE = "check";
-    public static final String ACTION_SEND_INITIAL_DATA = "sending initial data";
-
-    public static final String IP_TAG = "ip";
-    public static final String NAME_TAG = "name";
+public class NetworkNode implements Serializable {
 
     protected static final int TIME_OUT = 3;
     protected static final int THREAD_SLEEP_TIME = 500;
@@ -46,8 +32,8 @@ public class NetworkNode {
     protected ConnectionChecker connectionChecker;
     protected WifiManager wm;
 
-    Vector<Connection> connections = new Vector<>();
-    Vector<EventListener> eventListeners = new Vector<>();
+    public Vector<Connection> connections = new Vector<>();
+    public Vector<EventListener> eventListeners = new Vector<>();
 
     public NetworkNode(Context context) {
         this.context = context;
@@ -55,12 +41,12 @@ public class NetworkNode {
         wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
         createDataListenerThread();
-        connectionChecker = new ConnectionChecker();
+        //connectionChecker = new ConnectionChecker();
     }
 
     public static Bundle createBundleWithAction(String action) {
         Bundle bundle = new Bundle();
-        bundle.putString(ACTION_TAG, action);
+        bundle.putString(NetworkTags.ACTION_TAG, action);
 
         return bundle;
     }
@@ -101,6 +87,10 @@ public class NetworkNode {
         return connections.get(connectionPos);
     }
 
+    public int getConnectionCount() {
+        return connections.size();
+    }
+
     public void disconnectWith(int connectionPos, Bundle message) {
         disconnectWith(connections.get(connectionPos), message);
     }
@@ -112,7 +102,7 @@ public class NetworkNode {
     }
 
     public void disconnectWith(Connection connection) {
-        disconnectWith(connection, createBundleWithAction(ACTION_DISCONNECT));
+        disconnectWith(connection, createBundleWithAction(NetworkTags.ACTION_DISCONNECT));
     }
 
     public void disconnectAll(Bundle message) {
@@ -123,7 +113,7 @@ public class NetworkNode {
     }
 
     public void disconnectAll() {
-        disconnectAll(createBundleWithAction(ACTION_DISCONNECT));
+        disconnectAll(createBundleWithAction(NetworkTags.ACTION_DISCONNECT));
     }
 
     public void stopListenForData() {
@@ -146,8 +136,8 @@ public class NetworkNode {
         addEventListener(new EventListener() {
             @Override
             public void onDataReceived(Bundle data, Connection connection) {
-                String action = data.getString(ACTION_TAG);
-                if (action.equals(ACTION_DISCONNECT)) {
+                String action = data.getString(NetworkTags.ACTION_TAG, "null");
+                if (action.equals(NetworkTags.ACTION_DISCONNECT)) {
                     disconnected(data, connection);
                     disconnectWith(connection);
                 }
@@ -259,6 +249,59 @@ public class NetworkNode {
         }
     }
 
+    public Bundle sendDataAndWaitForResponse(final Bundle req, final int pos, final String expectedTag, final String expectedAction, int timeOutInMili) {
+        send(pos, req);
+
+        final Bundle[] result = new Bundle[1];
+        result[0] = null;
+
+        EventListener listenForRequestedData = new EventListener() {
+            @Override
+            public void onDataReceived(Bundle data, Connection connection) {
+                if (expectedAction.equals(data.getString(expectedTag)) && getConnectionIndex(connection) == pos) {
+                    result[0] = data;
+                }
+            }
+
+            @Override
+            public void onNewConnection(Connection connection) {
+
+            }
+
+            @Override
+            public void onConnectFail(String reason, String destinationIp) {
+
+            }
+
+            @Override
+            public void onInitialDataReceived(Bundle data, Connection connection) {
+
+            }
+
+            @Override
+            public void onDisconnected(Bundle message, Connection connection) {
+
+            }
+
+            @Override
+            public void onLosingConnection(Connection connection) {
+
+            }
+        };
+
+        addEventListener(listenForRequestedData);
+
+        try {
+            wait(timeOutInMili);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Log.e("Wait For Respone", "interrupted");
+        }
+
+        eventListeners.remove(listenForRequestedData);
+        return result[0];
+    }
+
     public Bundle getInitialDataFromConnection(final Connection newConnection) throws TimeoutException {
         return (Bundle) ThreadHelper.executeTaskWithTimeout(new Callable<Object>() {
             @Override
@@ -277,10 +320,13 @@ public class NetworkNode {
     }
 
     public void onDestroy() {
-        disconnectAll(createBundleWithAction(ACTION_DISCONNECT));
+        disconnectAll(createBundleWithAction(NetworkTags.ACTION_DISCONNECT));
 
         dataListenerThread.interrupt();
-        connectionChecker.onDestroy();
+
+        if (connectionChecker != null) {
+            connectionChecker.onDestroy();
+        }
 
         Log.e("Network", "destroyed");
     }
@@ -333,7 +379,7 @@ public class NetworkNode {
                 @Override
                 public void run() {
                     Bundle message = new Bundle();
-                    message.putString(ACTION_TAG, ACTION_CHECK_IF_CONNECTION_ALIVE);
+                    message.putString(NetworkTags.ACTION_TAG, NetworkTags.ACTION_CHECK_IF_CONNECTION_ALIVE);
                     while (true) {
                         try {
                             sleep(THREAD_SLEEP_TIME * 1);
@@ -350,8 +396,8 @@ public class NetworkNode {
             addEventListener(new EventListener() {
                 @Override
                 public void onDataReceived(Bundle data, Connection connection) {
-                    String action = data.getString(ACTION_TAG);
-                    if (action.equals(ACTION_CHECK_IF_CONNECTION_ALIVE)) {
+                    String action = data.getString(NetworkTags.ACTION_TAG, "null");
+                    if (action.equals(NetworkTags.ACTION_CHECK_IF_CONNECTION_ALIVE)) {
                         connection.lastChecked = new Date().getTime();
                     }
                 }

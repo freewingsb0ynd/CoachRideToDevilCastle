@@ -1,4 +1,6 @@
-package com.example.hoangelato.coachridetodevilcastle;
+package com.example.hoangelato.coachridetodevilcastle.GameModels;
+
+import com.example.bloe.rewrite.R;
 
 import java.io.Serializable;
 

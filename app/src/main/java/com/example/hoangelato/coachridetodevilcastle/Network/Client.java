@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Vector;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -19,11 +20,12 @@ import java.util.concurrent.TimeoutException;
  * Created by bloe on 07/08/2016.
  */
 
-public abstract class Client extends NetworkNode {
+public abstract class Client extends NetworkNode implements Serializable {
     public static final int SOCKET_PER_THREAD = 10;
+    public static final String CONNECT_SUCCESSFUL = "connected";
+    public static final String SERVER_TIMEOUT = "timed out";
+    public static final String CANT_CONNECT_TO_SERVER = "cant connect to server";
     public static final String NAME = "Client";
-
-    Thread clientThread;
 
 
     public Client(Context context) {
@@ -35,8 +37,8 @@ public abstract class Client extends NetworkNode {
     private Bundle getInitialData() {
         Bundle initialData = new Bundle();
 
-        initialData.putString(IP_TAG, getStringCurrentIp());
-        initialData.putString(ACTION_TAG, ACTION_SEND_INITIAL_DATA);
+        initialData.putString(NetworkTags.IP_TAG, getStringCurrentIp());
+        initialData.putString(NetworkTags.ACTION_TAG, NetworkTags.ACTION_SEND_INITIAL_DATA);
 
         customInitialData(initialData);
 
@@ -44,17 +46,18 @@ public abstract class Client extends NetworkNode {
     }
 
 
-    public void connectToHost(String serverAddress, int serverPort) {
-        if (clientThread != null) {
-            clientThread.interrupt();
-        }
-        disconnectAll(createBundleWithAction(ACTION_DISCONNECT));
+    public String connectToHost(String serverAddress, int serverPort, int timeout) {
+        disconnectAll(createBundleWithAction(NetworkTags.ACTION_DISCONNECT));
 
-        clientThread = new Thread(new ConnectToServer(serverAddress, serverPort));
-        clientThread.start();
+        try {
+            return ThreadHelper.executeTaskWithTimeoutNew(new ConnectToServer(serverAddress, serverPort), timeout);
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+           return SERVER_TIMEOUT;
+        }
     }
 
-    private class ConnectToServer extends Thread {
+    private class ConnectToServer implements Callable<String> {
         String serverAddress;
         int serverPort;
 
@@ -64,7 +67,8 @@ public abstract class Client extends NetworkNode {
         }
 
         @Override
-        public void run() {
+        public String call() throws Exception {
+            String result = "";
             try {
                 final Connection newConnection = new Connection(new Socket(serverAddress, serverPort));
 
@@ -78,9 +82,11 @@ public abstract class Client extends NetworkNode {
                     addConnection(newConnection);
                     initialDataReceived(initialData, newConnection);
                     Log.e("Client", "received initial data from server");
+                    result = CONNECT_SUCCESSFUL;
                 } catch (TimeoutException e) {
                     e.printStackTrace();
                     Log.e("Client", "server didn't response in time, will close the connection");
+                    result = SERVER_TIMEOUT;
                     newConnection.close();
                 }
 
@@ -88,6 +94,9 @@ public abstract class Client extends NetworkNode {
                 e.printStackTrace();
                 connectFail(e.toString(), serverAddress);
                 Log.e("Client", "cant connect to server " + e.toString());
+                result = CANT_CONNECT_TO_SERVER;
+            } finally {
+                return result;
             }
         }
     }
@@ -119,7 +128,7 @@ public abstract class Client extends NetworkNode {
                     s.connect(new InetSocketAddress(InetAddress.getByAddress(ip), Server.SERVER_PORT), 1000);
                     Bundle initialData = client.getInitialDataFromConnection(new Connection(s));
                     result.add(initialData);
-                    Log.e("Ip searcher", initialData.getString(NetworkNode.IP_TAG));
+                    Log.e("Ip searcher", initialData.getString(NetworkTags.IP_TAG));
                     s.close();
 
                 } catch (IOException e) {
@@ -175,51 +184,12 @@ public abstract class Client extends NetworkNode {
 
     }
 
-    public void request(final Bundle req, int pos, final String expectedAction, final ProgressListener<Bundle> progressListener) {
-        send(pos, req);
-
-
-        addEventListener(new EventListener() {
-            @Override
-            public void onDataReceived(Bundle data, Connection connection) {
-                if (expectedAction.equals(data.getString(ACTION_TAG))) {
-                    progressListener.onDone(data);
-                }
-            }
-
-            @Override
-            public void onNewConnection(Connection connection) {
-
-            }
-
-            @Override
-            public void onConnectFail(String reason, String destinationIp) {
-
-            }
-
-            @Override
-            public void onInitialDataReceived(Bundle data, Connection connection) {
-
-            }
-
-            @Override
-            public void onDisconnected(Bundle message, Connection connection) {
-
-            }
-
-            @Override
-            public void onLosingConnection(Connection connection) {
-
-            }
-        });
+    public void send(Bundle data) {
+        send(0, data);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        if (clientThread != null && clientThread.isInterrupted() == false) {
-            clientThread.interrupt();
-        }
     }
 }

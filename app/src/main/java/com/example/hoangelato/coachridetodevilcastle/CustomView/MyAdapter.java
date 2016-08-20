@@ -1,7 +1,6 @@
 package com.example.hoangelato.coachridetodevilcastle.CustomView;
 
 import android.content.Context;
-import android.support.annotation.CallSuper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -20,6 +19,14 @@ public abstract class MyAdapter<T extends MyDataNode> extends RecyclerView.Adapt
         this.mContext = mContext;
         this.dataList = dataList;
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public Vector<T> getDataList() {
+        return this.dataList;
+    }
+
+    public void add(T data) {
+        add(data, dataList.size());
     }
 
     public void add(T data, int pos) {
