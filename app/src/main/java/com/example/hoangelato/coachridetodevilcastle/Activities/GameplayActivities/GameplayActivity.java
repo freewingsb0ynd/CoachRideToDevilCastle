@@ -1,9 +1,11 @@
 package com.example.hoangelato.coachridetodevilcastle.Activities.GameplayActivities;
 
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,21 +28,24 @@ import java.util.ArrayList;
 
 public class GameplayActivity extends AppCompatActivity {
 
-    GamePlayActivityBinding binding;
+    public GamePlayActivityBinding binding;
 
-    ArrayList<ImageView> playerItemsView= new ArrayList<>();
-    ArrayList<TextView> numberofItemsOfAllPlayersView = new ArrayList<>();
-    ArrayList<ImageView> chooseOneIn7OthersPlayers = new ArrayList<>();
-    ArrayList<ImageButton> chooseOneOfYourItems = new ArrayList<>();
-    ArrayList<ImageView> checkedItemsView = new ArrayList<>();
+    public boolean finishedLoading = false;
 
-    View.OnClickListener buttonShowItemAction;
+    public ArrayList<ImageView> playerItemsView= new ArrayList<>();
+    public ArrayList<TextView> numberofItemsOfAllPlayersView = new ArrayList<>();
+    public ArrayList<ImageView> chooseOneIn7OthersPlayers = new ArrayList<>();
+    public ArrayList<ImageButton> chooseOneOfYourItems = new ArrayList<>();
+    public ArrayList<ImageView> checkedItemsView = new ArrayList<>();
+
+    public View.OnClickListener buttonShowItemAction;
 
     Player mPlayer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         binding = DataBindingUtil.setContentView(this, R.layout.game_play_activity);
 
         if (getIntent().getBooleanExtra(GameTags.IS_HOST, false)) {
@@ -48,12 +53,15 @@ public class GameplayActivity extends AppCompatActivity {
         } else {
             mPlayer = ClientWaitingActivity.mPlayer;
         }
+        mPlayer.setGameplayActivity(this);
 
         while (!mPlayer.finishedLoadingDataFromHost) {
             //wait for player to finish getting data from host
         }
 
-        //initView();
+        initView();
+
+        finishedLoading = true;
     }
 
     private void initView() {
@@ -93,13 +101,51 @@ public class GameplayActivity extends AppCompatActivity {
 
 
         initShowItemsButton();
-        initPlayerItemSlots();
+        initMainPlayerTeamSlot();
+        updateAllPlayers();
     }
 
-    private void initPlayerItemSlots() {
-        //initMainPlayerTeamSlot();
 
+    public void updateAllPlayers() {
+        updateMainPlayerOccuAndItems();
+        updateOtherPlayersStatus();
 
+    }
+
+    private void updateOtherPlayersStatus() {
+        updateAllPlayerOccu();
+        updateAllPlayerItemCount();
+    }
+
+    private void updateAllPlayerOccu() {
+        for(int i = 0; i < mPlayer.mHostData.numberOfPlayers-1; i++) {
+            PlayerData indexingPlayerData = mPlayer.mHostData.playersList.get((mPlayer.position + i+1) % mPlayer.mHostData.numberOfPlayers);
+            if (indexingPlayerData.getOccupation().getUsed()) {
+                chooseOneIn7OthersPlayers.get(i).setImageResource(indexingPlayerData.getOccupation().getOccupationSrc());
+            } else chooseOneIn7OthersPlayers.get(i).setImageResource(R.drawable.occupation_backside);
+        }
+    }
+
+    private void updateMainPlayerOccuAndItems() {
+        PlayerData mData = mPlayer.getPlayerData();
+        binding.player1OccuSlot.setImageResource(mPlayer.getPlayerData().getOccupation().getOccupationSrc());
+        for (int i=0; i<mData.itemsList.size(); i++){
+            playerItemsView.get(i).setImageResource(mData.itemsList.get(i).getItemSrc());
+        }
+    }
+
+    private void updateAllPlayerItemCount() {
+
+        for(int i = 0; i < mPlayer.mHostData.numberOfPlayers-1; i++) {
+            numberofItemsOfAllPlayersView.get(i).setText(
+                    mPlayer.mHostData.playersList.get(
+                            (mPlayer.position + i+1) % mPlayer.mHostData.numberOfPlayers
+                    ).itemsList.size() + ""
+            );
+        }
+
+        binding.hostNumberItems.setText(mPlayer.mHostData.itemsLeft.size()+"");
+        binding.hostNumberOccu.setText(mPlayer.mHostData.occupationsLeft.size()+"");
     }
 
     private void initMainPlayerTeamSlot() {
@@ -110,35 +156,28 @@ public class GameplayActivity extends AppCompatActivity {
             binding.player1TeamSlot.setImageResource(R.drawable.team_red);
         }
 
-        for (int i=0; i<mData.itemsList.size(); i++){
-            playerItemsView.get(i).setImageResource(mData.itemsList.get(i).getItemSrc());
-        }
     }
 
     private void initShowItemsButton() {
         buttonShowItemAction = new View.OnClickListener() {
-            boolean isShown = false;
             @Override
             public void onClick(View view) {
-                if (!isShown) {
-                    shown();
+                Log.e("button", "clicked");
+                if (binding.itemsSlot.getVisibility() == View.INVISIBLE) {
+                    showView(binding.itemsSlot);
                 } else {
-                    hide();
+                    hideView(binding.itemsSlot);
                 }
-            }
-
-            public void shown() {
-                isShown = true;
-                binding.itemsSlot.setVisibility(View.VISIBLE);
-            }
-
-            public void hide() {
-                isShown = false;
-                binding.itemsSlot.setVisibility(View.INVISIBLE);
             }
         };
         binding.btnItemsOnHand.setOnClickListener(buttonShowItemAction);
     }
 
+    public void showView(View view) {
+        view.setVisibility(View.VISIBLE);
+    }
 
+    public void hideView(View view) {
+            view.setVisibility(View.INVISIBLE);
+    }
 }

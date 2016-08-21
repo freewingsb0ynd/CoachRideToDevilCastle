@@ -1,6 +1,7 @@
 package com.example.hoangelato.coachridetodevilcastle.GameModels;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.hoangelato.coachridetodevilcastle.Network.Connection;
 import com.example.hoangelato.coachridetodevilcastle.Network.EventListener;
@@ -32,6 +33,7 @@ public class Host {
             @Override
             public void onDataReceived(Bundle data, Connection connection) {
                 String action = data.getString(NetworkTags.ACTION_TAG, "null");
+                String gameAction = data.getString(GameTags.GAME_ACTION_TAG, "null");
 
                 switch (action) {
                     case NetworkTags.ACTION_PUSH_NEW_DATA_TO_HOST :
@@ -45,7 +47,22 @@ public class Host {
                         countInitialDataReceived++;
                         if (countInitialDataReceived == numberOfPlayers) {
                             pushNewDataToPlayers();
+                            notifyPlayerTurn(0);
                         }
+                        break;
+                    case NetworkTags.ACTION_SEND_TO_OTHER_CLIENT :
+                        int desClient = data.getInt(NetworkTags.TO_CLIENT);
+                        mServer.send(desClient, data);
+                        Log.e("Host", "passed to other client " + desClient);
+                        break;
+                }
+
+                switch (gameAction) {
+                    case GameTags.ACTION_FINISH_TURN :
+                        Log.e("Player finish", mServer.getConnectionIndex(connection)+"");
+                        notifyPlayerTurn(
+                                (mServer.getConnectionIndex(connection) + 1) % mHostData.numberOfPlayers
+                        );
                 }
             }
 
@@ -74,6 +91,13 @@ public class Host {
 
             }
         });
+    }
+
+    private void notifyPlayerTurn(int playerIndex) {
+        Bundle bundle = new Bundle();
+        bundle.putString(GameTags.GAME_ACTION_TAG, GameTags.ACTION_PLAY_TURN);
+
+        mServer.send(playerIndex, bundle);
     }
 
     private void pushPlayerPosition(int playerIndex) {

@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * Created by bloe on 19/08/2016.
@@ -32,6 +33,41 @@ public class HostData implements Serializable {
         initConstantLists();
 
         initOccupationList();
+
+        initItemList();
+    }
+
+    private void initItemList() {
+        itemsLeft.add(new Item(0));
+        itemsLeft.add(new Item(0));
+        itemsLeft.add(new Item(0));
+        itemsLeft.add(new Item(1));
+        itemsLeft.add(new Item(1));
+        itemsLeft.add(new Item(1));
+        itemsLeft.add(new Item(4));
+        itemsLeft.add(new Item(5));
+        itemsLeft.add(new Item(6));
+        itemsLeft.add(new Item(7));
+        itemsLeft.add(new Item(8));
+        itemsLeft.add(new Item(9));
+        itemsLeft.add(new Item(10));
+        itemsLeft.add(new Item(11));
+        itemsLeft.add(new Item(12));
+        itemsLeft.add(new Item(13));
+        itemsLeft.add(new Item(14));
+        itemsLeft.add(new Item(15));
+        itemsLeft.add(new Item(16));
+
+        Collections.shuffle(itemsLeft);
+
+        Random rnd = new Random();
+        itemsLeft.add(rnd.nextInt(7), new Item(2));
+        itemsLeft.add(rnd.nextInt(8), new Item(3));
+
+        for(int i = numberOfPlayers-1; i >= 0; i--) {
+            playersList.get(i).addItem(itemsLeft.get(i));
+            itemsLeft.remove(i);
+        }
     }
 
     private void initPlayersData() {
@@ -47,7 +83,6 @@ public class HostData implements Serializable {
         Collections.shuffle(occupationsLeft);
 
         for(int i = numberOfPlayers-1; i >= 0; i--) {
-            Log.e("loop", String.valueOf(i));
             playersList.get(i).setOccupation(occupationsLeft.get(i));
             occupationsLeft.remove(i);
         }

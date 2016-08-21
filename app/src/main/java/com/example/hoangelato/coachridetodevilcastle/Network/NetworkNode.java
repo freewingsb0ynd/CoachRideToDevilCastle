@@ -25,7 +25,7 @@ import java.util.concurrent.TimeoutException;
 public class NetworkNode implements Serializable {
 
     protected static final int TIME_OUT = 3;
-    protected static final int THREAD_SLEEP_TIME = 500;
+    protected static final int THREAD_SLEEP_TIME = 100;
 
     protected Context context;
     protected Thread dataListenerThread;

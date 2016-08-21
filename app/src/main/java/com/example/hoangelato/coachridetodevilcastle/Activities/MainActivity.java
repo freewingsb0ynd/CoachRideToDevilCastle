@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (binding.editTextUsername.getText().toString().equals("")) {
             Toast.makeText(this, "Username can't be empty", Toast.LENGTH_SHORT).show();
         } else {
+            USERNAME = binding.editTextUsername.getText().toString();
             if (view == binding.buttonCreateGame) {
                 moveToHostWaitingActivity();
             } else if (view == binding.buttonJoinGame) {

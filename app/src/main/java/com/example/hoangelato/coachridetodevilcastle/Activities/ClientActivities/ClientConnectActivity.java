@@ -24,7 +24,7 @@ import com.example.hoangelato.coachridetodevilcastle.databinding.ClientConnectAc
 public class ClientConnectActivity extends AppCompatActivity {
     public static Client mClient;
     public static Context mContext;
-    public static int TIME_TO_WAIT_FOR_CONNECTION = 3000;
+    public static int TIME_TO_WAIT_FOR_CONNECTION = 5000;
 
     ClientConnectActivityBinding binding;
 

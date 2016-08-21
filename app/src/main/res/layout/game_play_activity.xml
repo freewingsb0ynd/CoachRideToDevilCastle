@@ -566,7 +566,51 @@
             </Button>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="@dimen/width_checked_team_and_occu_dialog"
+            android:layout_height="@dimen/height_checked_team_and_occu_dialog"
+            android:layout_centerInParent="true"
+            android:background="@color/colorDialog"
+            android:id="@+id/item_offered"
+            android:visibility="invisible"
+            >
+            <LinearLayout
+                android:layout_width="@dimen/width2CardLargeSize"
+                android:layout_height="@dimen/heightCardLargeSize"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true"
+                >
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:id="@+id/item_offered_slot"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tv_offerer_info"/>
+            </LinearLayout>
 
+            <Button
+                android:layout_width="@dimen/width_btn_checked_team_and_occu_dialog"
+                android:layout_height="@dimen/height_btn_checked_team_and_occu_dialog"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/btn_refuse_trade"
+                android:text="Refuse"
+                />
+            <Button
+                android:layout_width="@dimen/width_btn_checked_team_and_occu_dialog"
+                android:layout_height="@dimen/height_btn_checked_team_and_occu_dialog"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/btn_agree_trade"
+                android:text="OK"
+                android:layout_toLeftOf="@id/btn_refuse_trade"
+                >
+            </Button>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="@dimen/width_won_list_actions_dialog"

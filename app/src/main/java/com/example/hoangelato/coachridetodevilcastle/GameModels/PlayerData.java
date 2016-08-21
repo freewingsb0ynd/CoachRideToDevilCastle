@@ -11,7 +11,7 @@ public class PlayerData implements Serializable {
     public String playerName;
     public int team;
     public Occupation occupation;
-    public ArrayList<Item> itemsList;
+    public ArrayList<Item> itemsList = new ArrayList<>();
     public int playerPos;
 
     public PlayerData() {
@@ -56,5 +56,10 @@ public class PlayerData implements Serializable {
 
     public void setPlayerPos(int playerPos) {
         this.playerPos = playerPos;
+    }
+
+    public void addItem(Item item) {
+        itemsList.add(item);
+        item.isOwned = true;
     }
 }

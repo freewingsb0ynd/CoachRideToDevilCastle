@@ -8,7 +8,7 @@ public class NetworkTags {
     public static final String ACTION_PUSH_NEW_DATA_TO_HOST = "push new data to host";
     public static final String ACTION_PUSH_NEW_DATA_TO_PLAYERS ="push new data to players";
     public static final String ACTION_SEND_TO_OTHER_CLIENT = "send to other client";
-    public static final String CLIENT_TO_SEND = "client to send";
+    public static final String TO_CLIENT = "client to send";
     public static final String ACTION_REQUEST_POSITION = "request position";
     public static final String PLAYER_POSITION ="player position";
     public static final String ACTION_TAG = "action";
@@ -26,4 +26,5 @@ public class NetworkTags {
     public static final String ACTION_REQUEST_PLAYERS_LIST = "request players list";
     public static final String ACTION_PUSH_PLAYER_INITIAL_DATA_TO_HOST = "push player initial data";
     public static final String ACTION_PUSH_PLAYER_POSITION_TO_PLAYER = "push player position";
+    public static final String FROM_CLIENT = "from client";
 }

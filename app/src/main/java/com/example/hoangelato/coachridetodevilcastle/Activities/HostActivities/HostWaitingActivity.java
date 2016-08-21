@@ -58,7 +58,7 @@ public class HostWaitingActivity extends AppCompatActivity {
 
     }
 
-    private void initNetwork() {
+    private void initNetwork(){
         mServer = new Server(this) {
             @Override
             public void customInitialData(Bundle data) {
@@ -93,10 +93,9 @@ public class HostWaitingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         connectedPlayerAdapter.add(new PlayerInfo(
-                                data.getString(NetworkTags.NAME_TAG),
-                                data.getString(NetworkTags.IP_TAG)
-                        ));
-
+                                data.getString(NetworkTags.NAME_TAG, "null"),
+                                data.getString(NetworkTags.IP_TAG, "null")
+                        ), 0);
                     }
                 });
 
