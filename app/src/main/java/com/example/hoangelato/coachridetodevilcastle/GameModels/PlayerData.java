@@ -39,7 +39,7 @@ public class PlayerData implements Serializable {
 
     public void setOccupation(Occupation occupation) {
         this.occupation = occupation;
-        occupation.setUsed(true);
+        occupation.isOccupied = true;
     }
 
     public ArrayList<Item> getItemsList() {

@@ -1,18 +1,17 @@
 package com.example.hoangelato.coachridetodevilcastle.GameModels;
 
 import android.os.Bundle;
-import android.support.annotation.UiThread;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.hoangelato.coachridetodevilcastle.Activities.GameplayActivities.GameplayActivity;
 import com.example.hoangelato.coachridetodevilcastle.Activities.MainActivity;
-import com.example.hoangelato.coachridetodevilcastle.CustomView.OnItemClickListener;
 import com.example.hoangelato.coachridetodevilcastle.Network.Client;
 import com.example.hoangelato.coachridetodevilcastle.Network.Connection;
 import com.example.hoangelato.coachridetodevilcastle.Network.EventListener;
 import com.example.hoangelato.coachridetodevilcastle.Network.NetworkTags;
+import com.example.hoangelato.coachridetodevilcastle.R;
 
 
 /**
@@ -73,6 +72,25 @@ public class Player {
                         answerTrade(data);
                         break;
 
+                    case GameTags.EXECUTE_EFFECT:
+                        Item sentItem = getPlayerData().itemsList.get(data.getInt(GameTags.SENT_ITEM));
+                        int sender = data.getInt(NetworkTags.FROM_CLIENT);
+                        Item receivedItem = mHostData.playersList.get(
+                                sender
+                        ).getItemsList().get(data.getInt(GameTags.RECEIVED_ITEM));
+
+                        executeItemEffect(receivedItem, sentItem, sender);
+
+                        if (data.getBoolean(GameTags.FIRST_EFFECT, false)) {
+                            Bundle bundle = createBundleToOtherClient(sender);
+                            bundle.putInt(GameTags.SENT_ITEM, data.getInt(GameTags.RECEIVED_ITEM));
+                            bundle.putInt(GameTags.RECEIVED_ITEM, data.getInt(GameTags.SENT_ITEM));
+                            bundle.putString(GameTags.GAME_ACTION_TAG, GameTags.EXECUTE_EFFECT);
+
+                            mClient.send(bundle);
+                        } else {
+                            endTurn();
+                        }
                 }
             }
 
@@ -102,6 +120,112 @@ public class Player {
             }
         });
         pushPlayerInitialDataToHost();
+    }
+
+    public void executeItemEffect(Item sentItem, Item receivedItem, final int senderIndex) {
+        if (receivedItem.getItemType() == 5) {
+            gm.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(gm, "You had received Broken Mirror. Your trade-in effect of your item had been prevented", Toast.LENGTH_LONG);
+                }
+            });
+        } else {
+            switch (sentItem.getItemType()) {
+                case 2:
+                case 3:
+                    Item itemDrawn = mHostData.itemsLeft.get(0);
+                    mHostData.itemsLeft.remove(itemDrawn);
+                    getPlayerData().itemsList.add(itemDrawn);
+                    break;
+                case 7:
+                    Occupation occupation = getPlayerData().getOccupation();
+
+                    occupation.isOccupied = false;
+                    occupation.setUsed(false);
+
+                    getPlayerData().setOccupation(mHostData.occupationsLeft.get(0));
+
+                    gm.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            gm.binding.player1OccuSlot.setImageResource(
+                                    getPlayerData().getOccupation().getOccupationSrc()
+                            );
+                        }
+                    });
+
+                    mHostData.occupationsLeft.remove(getPlayerData().getOccupation());
+                    mHostData.occupationsLeft.add(occupation);
+
+                    break;
+                case 10:
+                    gm.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            gm.binding.checkedTeamSlot.setImageResource(
+                                    mHostData.playersList.get(senderIndex).getTeam() == 1 ?
+                                            R.drawable.team_blue : R.drawable.team_red
+                            );
+
+                            gm.showView(gm.binding.checkedTeamAndOccuDialog);
+
+                            gm.binding.btnCheckedTeamAndOccuDone.setOnClickListener(
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            gm.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    gm.hideView(gm.binding.checkedTeamAndOccuDialog);
+                                                }
+                                            });
+                                        }
+                                    }
+                            );
+                        }
+                    });
+
+                    break;
+                case 12:
+                    gm.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for(int i = 0; i < mHostData.playersList.get(senderIndex).itemsList.size(); i++) {
+                                final int finalI = i;
+                                gm.checkedItemsView.get(finalI).setImageResource(
+                                        mHostData.playersList.get(senderIndex).itemsList.get(finalI).getItemSrc()
+                                );
+                            }
+
+                            gm.binding.btnCheckedItemDone.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    gm.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            gm.hideView(gm.binding.checkedItemsDialog);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+
+                    break;
+                case 15:
+                    Occupation occupation1 = getPlayerData().getOccupation();
+                    getPlayerData().setOccupation(mHostData.playersList.get(senderIndex).getOccupation());
+                    mHostData.playersList.get(senderIndex).setOccupation(occupation1);
+
+                    getPlayerData().getOccupation().setUsed(false);
+                    mHostData.playersList.get(senderIndex).getOccupation().setUsed(false);
+
+                    break;
+            }
+
+            pushNewDataToHost();
+        }
     }
 
     public void offerTrade() {
@@ -192,7 +316,7 @@ public class Player {
 
     private void answerTrade(Bundle data) {
         final int offererIndex = data.getInt(NetworkTags.FROM_CLIENT);
-        int offeredItemIndex = data.getInt(GameTags.CHOSED_ITEM);
+        final int offeredItemIndex = data.getInt(GameTags.CHOSED_ITEM);
         final Item offeredItem = mHostData.playersList.get(offererIndex).getItemsList().get(offeredItemIndex);
 
         gm.runOnUiThread(new Runnable() {
@@ -218,7 +342,7 @@ public class Player {
                 gm.binding.btnRefuseTrade.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        finishTrade(offererIndex, offeredItem, null);
+                        finishTrade(offererIndex, offeredItemIndex, -1);
                     }
                 });
 
@@ -254,7 +378,7 @@ public class Player {
                                                             }
                                                         });
                                                         if (getPlayerData().itemsList.size() == 1) {
-                                                            finishTrade(offererIndex, offeredItem, null);
+                                                            finishTrade(offererIndex, offeredItemIndex, -1);
                                                         }
                                                         break;
                                                     }
@@ -267,12 +391,12 @@ public class Player {
                                                             }
                                                         });
                                                         if (getPlayerData().itemsList.size() == 1) {
-                                                            finishTrade(offererIndex, offeredItem, null);
+                                                            finishTrade(offererIndex, offeredItemIndex, -1);
                                                         }
                                                         break;
                                                     }
                                                 default:
-                                                    finishTrade(offererIndex, offeredItem, getPlayerData().getItemsList().get(I));
+                                                    finishTrade(offererIndex, offeredItemIndex, I);
                                                     break;
 
                                             }
@@ -291,7 +415,13 @@ public class Player {
 
     }
 
-    private void finishTrade(int sender, Item receivedItem, Item sentItem) {
+    private void finishTrade(int sender, int receivedItemPos, int sentItemPos) {
+        Item sentItem = null;
+        if (sentItemPos != -1) {
+            sentItem = getPlayerData().getItemsList().get(sentItemPos);
+        }
+        Item receivedItem = mHostData.playersList.get(sender).getItemsList().get(receivedItemPos);
+
         if (sentItem != null) {
             getPlayerData().itemsList.remove(sentItem);
             getPlayerData().itemsList.add(receivedItem);
@@ -300,16 +430,33 @@ public class Player {
             mHostData.playersList.get(sender).itemsList.add(sentItem);
 
             pushNewDataToHost();
+
+            Bundle bundle = createBundleToOtherClient(sender);
+            bundle.putString(GameTags.GAME_ACTION_TAG, GameTags.EXECUTE_EFFECT);
+            bundle.putBoolean(GameTags.FIRST_EFFECT, true);
+            bundle.putInt(GameTags.SENT_ITEM, receivedItemPos);
+            bundle.putInt(GameTags.RECEIVED_ITEM, sentItemPos);
+
+            mClient.send(bundle);
+        } else {
+            endTurn();
         }
 
         gm.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                gm.hideView(gm.binding.itemsSlot);
+                gm.hideView(gm.binding.itemOffered);
             }
         });
+    }
 
-        endTurn();
+    private Bundle createBundleToOtherClient(int clientIndex) {
+        Bundle bundle = new Bundle();
+        bundle.putString(NetworkTags.ACTION_TAG, NetworkTags.ACTION_SEND_TO_OTHER_CLIENT);
+        bundle.putInt(NetworkTags.FROM_CLIENT, position);
+        bundle.putInt(NetworkTags.TO_CLIENT, clientIndex);
+
+        return bundle;
     }
 
     public void playTurn() {
@@ -321,6 +468,7 @@ public class Player {
         gm.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Log.e("My turn", "");
                 gm.showView(gm.binding.listActionsDialog);
 
                 gm.binding.btnTrade.setOnClickListener(new View.OnClickListener() {

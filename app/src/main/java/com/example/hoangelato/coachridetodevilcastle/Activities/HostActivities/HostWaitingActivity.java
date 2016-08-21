@@ -51,10 +51,10 @@ public class HostWaitingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         binding = DataBindingUtil.setContentView(this, R.layout.host_waiting_activity);
+        mContext = this;
 
         initView();
         initNetwork();

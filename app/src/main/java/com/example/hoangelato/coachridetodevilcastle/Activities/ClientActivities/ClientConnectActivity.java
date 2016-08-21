@@ -32,10 +32,9 @@ public class ClientConnectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         binding = DataBindingUtil.setContentView(this, R.layout.client_connect_activity);
-
+        mContext = this;
         initClient();
         initView();
     }

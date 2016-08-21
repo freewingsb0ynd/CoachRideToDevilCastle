@@ -67,6 +67,10 @@ public class HostData implements Serializable {
         for(int i = numberOfPlayers-1; i >= 0; i--) {
             playersList.get(i).addItem(itemsLeft.get(i));
             itemsLeft.remove(i);
+            playersList.get(i).addItem(itemsLeft.get(i));
+            itemsLeft.remove(i);
+            playersList.get(i).addItem(itemsLeft.get(i));
+            itemsLeft.remove(i);
         }
     }
 

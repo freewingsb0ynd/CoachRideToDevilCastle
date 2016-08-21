@@ -39,9 +39,10 @@ public class ClientWaitingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mClient = ClientConnectActivity.mClient;
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         binding = DataBindingUtil.setContentView(this, R.layout.client_waiting_activity);
+
+        mClient = ClientConnectActivity.mClient;
 
         initNetwork();
         initView();

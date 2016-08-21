@@ -115,6 +115,19 @@ public class GameplayActivity extends AppCompatActivity {
     private void updateOtherPlayersStatus() {
         updateAllPlayerOccu();
         updateAllPlayerItemCount();
+        updateCheckedItems();
+    }
+
+    private void updateCheckedItems() {
+        for(int i=0; i<5;i++){
+            checkedItemsView.get(i).setBackground(null);
+            checkedItemsView.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
     }
 
     private void updateAllPlayerOccu() {
@@ -178,6 +191,6 @@ public class GameplayActivity extends AppCompatActivity {
     }
 
     public void hideView(View view) {
-            view.setVisibility(View.INVISIBLE);
+        view.setVisibility(View.INVISIBLE);
     }
 }

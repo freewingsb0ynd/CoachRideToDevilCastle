@@ -17,6 +17,8 @@ public class Host {
     HostData mHostData;
     int numberOfPlayers;
 
+    int turn = 0;
+
     public Server mServer;
 
     public Host(Server mServer) {
@@ -59,9 +61,9 @@ public class Host {
 
                 switch (gameAction) {
                     case GameTags.ACTION_FINISH_TURN :
-                        Log.e("Player finish", mServer.getConnectionIndex(connection)+"");
+                        Log.e("Host", numberOfPlayers+" "+turn);
                         notifyPlayerTurn(
-                                (mServer.getConnectionIndex(connection) + 1) % mHostData.numberOfPlayers
+                                (++turn) % mHostData.numberOfPlayers
                         );
                 }
             }
