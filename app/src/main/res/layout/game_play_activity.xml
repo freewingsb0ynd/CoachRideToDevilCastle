@@ -467,7 +467,36 @@
                 android:text="ok"/>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:background="@color/colorDialog"
+            android:id="@+id/declare_dialog"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_vertical_margin"
 
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textsize_tv_info_dialog"
+                android:layout_centerHorizontal="true"
+                android:text="Choose 4 players of your team (if you are proclaiming) or your opponents (if you are foreseeing)"
+                android:id="@+id/tv_choose_player_declare_dialog"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textsize_tv_info_dialog"
+                android:layout_centerHorizontal="true"
+                android:text="Choose players of your team /your opponents which holding keys/goblet"
+                android:layout_below="@id/tv_choose_player_declare_dialog"
+                android:id="@+id/tv_choose_holding_items_player_dialog"/>
+
+        </RelativeLayout>
 
 
         <RelativeLayout
@@ -646,4 +675,5 @@
                 />
         </LinearLayout>
     </RelativeLayout>
+
 </layout>
