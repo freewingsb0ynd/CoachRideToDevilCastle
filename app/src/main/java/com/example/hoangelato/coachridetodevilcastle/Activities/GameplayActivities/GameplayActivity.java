@@ -23,7 +23,7 @@ import com.example.hoangelato.coachridetodevilcastle.databinding.GamePlayActivit
 import java.util.ArrayList;
 
 /**
- * Created by bloe on 18/08/2016.
+ * Created by hoangelato on 26/07/2016.
  */
 
 public class GameplayActivity extends AppCompatActivity {

@@ -10,7 +10,7 @@ import com.example.hoangelato.coachridetodevilcastle.Network.Server;
 
 
 /**
- * Created by bloe on 19/08/2016.
+ * Created by hoangelato on 26/07/2016.
  */
 public class Host {
 
